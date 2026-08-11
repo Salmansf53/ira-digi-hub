@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>iRA Digi HUB - Secure Admin Panel</title>
+    <title>iRA Digi HUB - Secure Admin Dashboard</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
@@ -42,18 +42,26 @@
         </div>
     </div>
 
-    <!-- ================= 2. MAIN DASHBOARD (HIDDEN BY DEFAULT) ================= -->
+    <!-- ================= 2. MAIN DASHBOARD ================= -->
     <div id="dashboardScreen" class="hidden flex h-screen w-full">
+        
         <!-- Sidebar -->
         <aside class="w-64 bg-[#0b0f19] text-white flex flex-col hidden md:flex shadow-2xl relative z-20">
             <div class="h-20 flex items-center px-8 border-b border-gray-800">
                 <div class="text-2xl font-bold tracking-wide">iRA<span class="text-purple-500">DIGI</span>HUB</div>
             </div>
+            
             <div class="flex-1 overflow-y-auto py-6">
-                <div class="px-6 text-xs font-bold text-gray-500 uppercase tracking-wider mb-4">Menu</div>
+                <div class="px-6 text-xs font-bold text-gray-500 uppercase tracking-wider mb-4">Analytics & Tools</div>
                 <ul class="space-y-2 px-4">
                     <li>
-                        <a href="#" class="flex items-center space-x-3 bg-gradient-to-r from-purple-600 to-purple-800 text-white px-4 py-3 rounded-lg shadow-md border border-purple-500/30">
+                        <a href="#" class="flex items-center space-x-3 text-white bg-gray-800 px-4 py-3 rounded-lg transition duration-200">
+                            <i class="fas fa-chart-pie w-5"></i>
+                            <span>Overview</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="flex items-center space-x-3 bg-gradient-to-r from-purple-600 to-purple-800 text-white px-4 py-3 rounded-lg shadow-md border border-purple-500/30 mt-2">
                             <i class="fas fa-plus-circle w-5"></i>
                             <span class="font-medium">Add Product</span>
                         </a>
@@ -61,12 +69,15 @@
                 </ul>
             </div>
             
+            <!-- Admin Profile -->
             <div class="p-6 border-t border-gray-800 bg-[#131929]">
                 <div class="flex items-center justify-between">
                     <div class="flex items-center space-x-3">
-                        <div class="w-10 h-10 bg-purple-600 rounded-full flex items-center justify-center font-bold text-lg shadow-lg">A</div>
+                        <div class="w-10 h-10 bg-purple-600 rounded-full flex items-center justify-center font-bold text-lg shadow-lg border-2 border-purple-400">
+                            S
+                        </div>
                         <div>
-                            <div class="font-bold text-sm">Aftab</div>
+                            <div class="font-bold text-sm">Salman</div>
                             <div class="text-xs text-green-400 flex items-center mt-1">
                                 <span class="w-2 h-2 rounded-full bg-green-400 mr-1 animate-pulse"></span> Online
                             </div>
@@ -81,45 +92,89 @@
         </aside>
 
         <!-- Main Content Area -->
-        <main class="flex-1 flex flex-col h-screen overflow-hidden">
+        <main class="flex-1 flex flex-col h-screen overflow-hidden bg-gray-50">
+            
             <header class="h-20 bg-white border-b border-gray-200 flex items-center justify-between px-8 shadow-sm">
-                <h1 class="text-2xl font-bold text-gray-800">Admin Workspace</h1>
-                <div class="flex items-center bg-green-50 text-green-700 px-4 py-2 rounded-full border border-green-200 text-sm font-medium">
-                    <i class="fas fa-shield-alt text-green-500 mr-2"></i> Authenticated
+                <h1 class="text-2xl font-bold text-gray-800">Store Analytics & Upload</h1>
+                <div class="flex items-center space-x-4">
+                    <div class="hidden sm:flex items-center space-x-2 bg-green-50 text-green-700 px-4 py-2 rounded-full border border-green-200 text-sm font-medium">
+                        <i class="fas fa-shield-alt text-green-500"></i>
+                        <span>Secure Connection</span>
+                    </div>
                 </div>
             </header>
 
             <div class="flex-1 overflow-y-auto p-8">
-                <div class="max-w-4xl mx-auto">
-                    <!-- Product Upload Form -->
+                <div class="max-w-6xl mx-auto">
+                    
+                    <!-- ================= DYNAMIC STATS WIDGETS ================= -->
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                        <!-- Stat Box 1: Total Products (LIVE) -->
+                        <div class="bg-white p-6 rounded-xl border border-gray-100 shadow-sm flex items-center space-x-4 hover:shadow-md transition">
+                            <div class="w-14 h-14 bg-purple-50 text-purple-600 rounded-xl flex items-center justify-center text-2xl">
+                                <i class="fas fa-boxes"></i>
+                            </div>
+                            <div>
+                                <div class="text-gray-400 text-sm font-medium mb-1">Total Products Listed</div>
+                                <div id="statTotalProducts" class="text-2xl font-bold text-gray-900 flex items-center">
+                                    <i class="fas fa-circle-notch fa-spin text-sm text-purple-400 mr-2"></i>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Stat Box 2: Total Sales (Ready for Razorpay) -->
+                        <div class="bg-white p-6 rounded-xl border border-gray-100 shadow-sm flex items-center space-x-4 hover:shadow-md transition opacity-80">
+                            <div class="w-14 h-14 bg-blue-50 text-blue-600 rounded-xl flex items-center justify-center text-2xl">
+                                <i class="fas fa-wallet"></i>
+                            </div>
+                            <div>
+                                <div class="text-gray-400 text-sm font-medium mb-1">Total Sales Revenue</div>
+                                <div class="text-2xl font-bold text-gray-900">₹0 <span class="text-xs text-gray-400 ml-1 font-normal">(Awaiting Razorpay)</span></div>
+                            </div>
+                        </div>
+                        
+                        <!-- Stat Box 3: Store Visits (Ready for GA) -->
+                        <div class="bg-white p-6 rounded-xl border border-gray-100 shadow-sm flex items-center space-x-4 hover:shadow-md transition opacity-80">
+                            <div class="w-14 h-14 bg-green-50 text-green-600 rounded-xl flex items-center justify-center text-2xl">
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                            <div>
+                                <div class="text-gray-400 text-sm font-medium mb-1">Live Store Visits</div>
+                                <div class="text-2xl font-bold text-gray-900">-- <span class="text-xs text-gray-400 ml-1 font-normal">(Awaiting Analytics)</span></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ================= PRODUCT UPLOAD FORM ================= -->
                     <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden mb-10">
                         <div class="bg-gray-50/50 px-8 py-5 border-b border-gray-100 flex justify-between items-center">
                             <h2 class="text-lg font-bold text-gray-800"><i class="fas fa-cloud-upload-alt text-purple-500 mr-2"></i>Publish New Product</h2>
                         </div>
+                        
                         <div class="p-8">
                             <form id="addProductForm" class="space-y-6">
                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                     <div>
-                                        <label class="block text-sm font-bold text-gray-700 mb-2">Product Name *</label>
-                                        <input type="text" id="prodName" required class="w-full border border-gray-300 rounded-lg p-3.5 focus:ring-2 focus:ring-purple-500 focus:outline-none bg-gray-50/50">
+                                        <label class="block text-sm font-bold text-gray-700 mb-2">Product Name <span class="text-red-500">*</span></label>
+                                        <input type="text" id="prodName" required placeholder="e.g., Ultimate Excel Tracker" class="w-full border border-gray-300 rounded-lg p-3.5 focus:ring-2 focus:ring-purple-500 focus:outline-none bg-gray-50/50 hover:bg-white transition">
                                     </div>
                                     <div>
-                                        <label class="block text-sm font-bold text-gray-700 mb-2">Price (₹) *</label>
+                                        <label class="block text-sm font-bold text-gray-700 mb-2">Price (₹) <span class="text-red-500">*</span></label>
                                         <div class="relative">
                                             <span class="absolute inset-y-0 left-0 flex items-center pl-4 text-gray-500 font-bold">₹</span>
-                                            <input type="number" id="prodPrice" required class="w-full border border-gray-300 rounded-lg p-3.5 pl-8 focus:ring-2 focus:ring-purple-500 focus:outline-none bg-gray-50/50">
+                                            <input type="number" id="prodPrice" required placeholder="299" class="w-full border border-gray-300 rounded-lg p-3.5 pl-8 focus:ring-2 focus:ring-purple-500 focus:outline-none bg-gray-50/50 hover:bg-white transition">
                                         </div>
                                     </div>
                                 </div>
 
                                 <div>
-                                    <label class="block text-sm font-bold text-gray-700 mb-2">Category *</label>
-                                    <select id="prodCategory" class="w-full border border-gray-300 rounded-lg p-3.5 focus:ring-2 focus:ring-purple-500 focus:outline-none bg-gray-50/50">
+                                    <label class="block text-sm font-bold text-gray-700 mb-2">Category <span class="text-red-500">*</span></label>
+                                    <select id="prodCategory" class="w-full border border-gray-300 rounded-lg p-3.5 focus:ring-2 focus:ring-purple-500 focus:outline-none bg-gray-50/50 hover:bg-white transition">
                                         <option value="Excel Templates">Excel Templates</option>
                                         <option value="Business Templates">Business Templates</option>
                                         <option value="Canva Templates">Canva Templates</option>
-                                        <option value="Finance">Finance</option>
-                                        <option value="Planners">Planners</option>
+                                        <option value="Finance & Accounting">Finance & Accounting</option>
+                                        <option value="Planners & Trackers">Planners & Trackers</option>
                                         <option value="Resume & CV">Resume & CV</option>
                                         <option value="eBooks & Guides">eBooks & Guides</option>
                                         <option value="Tools & Software">Tools & Software</option>
@@ -127,27 +182,36 @@
                                 </div>
 
                                 <div>
-                                    <label class="block text-sm font-bold text-gray-700 mb-2">Description *</label>
-                                    <textarea id="prodDesc" required rows="3" class="w-full border border-gray-300 rounded-lg p-3.5 focus:ring-2 focus:ring-purple-500 focus:outline-none bg-gray-50/50"></textarea>
+                                    <label class="block text-sm font-bold text-gray-700 mb-2">Product Description <span class="text-red-500">*</span></label>
+                                    <textarea id="prodDesc" required rows="3" placeholder="Highlight the key features and benefits..." class="w-full border border-gray-300 rounded-lg p-3.5 focus:ring-2 focus:ring-purple-500 focus:outline-none bg-gray-50/50 hover:bg-white transition"></textarea>
                                 </div>
 
                                 <hr class="border-gray-100 my-6">
 
                                 <div>
-                                    <label class="block text-sm font-bold text-gray-700 mb-2">Google Drive File Link *</label>
-                                    <input type="url" id="prodFileLink" required class="w-full border border-gray-300 rounded-lg p-3.5 focus:ring-2 focus:ring-purple-500 focus:outline-none bg-gray-50/50">
+                                    <label class="block text-sm font-bold text-gray-700 mb-2">Google Drive File Link (Customer Download) <span class="text-red-500">*</span></label>
+                                    <div class="relative">
+                                        <span class="absolute inset-y-0 left-0 flex items-center pl-4 text-blue-500"><i class="fab fa-google-drive"></i></span>
+                                        <input type="url" id="prodFileLink" required placeholder="https://drive.google.com/file/d/..." class="w-full border border-gray-300 rounded-lg p-3.5 pl-10 focus:ring-2 focus:ring-purple-500 focus:outline-none bg-gray-50/50 hover:bg-white transition">
+                                    </div>
                                 </div>
                                 
                                 <div>
-                                    <label class="block text-sm font-bold text-gray-700 mb-2">Image Links (Comma Separated) *</label>
-                                    <textarea id="prodImageLink" required rows="2" class="w-full border border-gray-300 rounded-lg p-3.5 focus:ring-2 focus:ring-purple-500 focus:outline-none bg-gray-50/50"></textarea>
+                                    <label class="block text-sm font-bold text-gray-700 mb-2">Product Image Links (Comma Separated) <span class="text-red-500">*</span></label>
+                                    <div class="relative">
+                                        <span class="absolute top-4 left-0 flex items-center pl-4 text-purple-500"><i class="far fa-images"></i></span>
+                                        <textarea id="prodImageLink" required rows="2" placeholder="https://link1.com, https://link2.com" class="w-full border border-gray-300 rounded-lg p-3.5 pl-10 focus:ring-2 focus:ring-purple-500 focus:outline-none bg-gray-50/50 hover:bg-white transition"></textarea>
+                                    </div>
                                 </div>
 
-                                <button type="submit" class="w-full px-8 bg-purple-600 hover:bg-purple-700 text-white font-bold py-4 rounded-lg transition duration-300 shadow-lg text-lg">
-                                    <i class="fas fa-rocket mr-2"></i> Publish Product
-                                </button>
+                                <div class="pt-2">
+                                    <button type="submit" class="w-full md:w-auto px-10 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white font-bold py-4 rounded-lg transition duration-300 shadow-lg text-lg flex items-center justify-center">
+                                        <i class="fas fa-rocket mr-2"></i> Publish Product Live
+                                    </button>
+                                </div>
                             </form>
-                            <div id="statusMessage" class="mt-6 text-center font-bold hidden p-4 rounded-lg"></div>
+                            
+                            <div id="statusMessage" class="mt-6 text-center font-bold hidden p-4 rounded-lg border"></div>
                         </div>
                     </div>
                 </div>
@@ -155,11 +219,10 @@
         </main>
     </div>
 
-    <!-- ================= FIREBASE AUTH & DATABASE SCRIPT ================= -->
+    <!-- ================= FIREBASE SCRIPT (AUTH + DYNAMIC ANALYTICS) ================= -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
-        import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
-        // Authentication Modules Naye Add kiye gaye hain
+        import { getFirestore, collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
         import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
 
         const firebaseConfig = {
@@ -174,27 +237,38 @@
 
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
-        const auth = getAuth(app); // Security Lock Engine
+        const auth = getAuth(app);
 
         const loginScreen = document.getElementById('loginScreen');
         const dashboardScreen = document.getElementById('dashboardScreen');
 
-        // 1. Check User Status (Lock/Unlock)
+        // Function: Fetch Live Total Products count from Database
+        async function fetchDashboardStats() {
+            try {
+                const querySnapshot = await getDocs(collection(db, "products"));
+                document.getElementById('statTotalProducts').innerText = querySnapshot.size;
+            } catch (error) {
+                console.error("Error fetching stats:", error);
+                document.getElementById('statTotalProducts').innerText = "Error";
+            }
+        }
+
+        // Auth Check & Screen Toggle
         onAuthStateChanged(auth, (user) => {
             if (user) {
-                // Sahi password - Dashboard khol do
                 loginScreen.classList.add('hidden');
                 dashboardScreen.classList.remove('hidden');
                 dashboardScreen.classList.add('flex');
+                // Jaise hi login ho, analytics fetch karo
+                fetchDashboardStats(); 
             } else {
-                // Bahar nikal do - Login screen dikhao
                 loginScreen.classList.remove('hidden');
                 dashboardScreen.classList.add('hidden');
                 dashboardScreen.classList.remove('flex');
             }
         });
 
-        // 2. Login Button Logic
+        // Login Submit
         document.getElementById('loginForm').addEventListener('submit', async (e) => {
             e.preventDefault();
             const btn = e.target.querySelector('button');
@@ -207,26 +281,28 @@
 
             try {
                 await signInWithEmailAndPassword(auth, email, password);
-                // Auth state observer apne aap dashboard khol dega
             } catch (error) {
                 errorMsg.classList.remove('hidden');
                 btn.innerHTML = '<i class="fas fa-sign-in-alt mr-2"></i> Secure Login';
             }
         });
 
-        // 3. Logout Button Logic
+        // Logout
         document.getElementById('logoutBtn').addEventListener('click', () => {
             signOut(auth);
         });
 
-        // 4. Product Upload Logic (Sirf Dashboard ke andar chalega)
+        // Product Upload Logic
         document.getElementById('addProductForm').addEventListener('submit', async (e) => {
             e.preventDefault();
             const btn = e.target.querySelector('button');
             const status = document.getElementById('statusMessage');
             
-            btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Publishing...';
-            
+            const originalBtnHtml = btn.innerHTML;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Publishing to Store...';
+            btn.disabled = true;
+            btn.classList.add('opacity-80', 'cursor-not-allowed');
+
             const rawImageLinks = document.getElementById('prodImageLink').value;
             const imageArray = rawImageLinks.split(',').map(link => link.trim()).filter(link => link !== "");
 
@@ -241,15 +317,21 @@
                     dateAdded: new Date().toISOString()
                 });
 
-                status.innerHTML = "<i class='fas fa-check-circle mr-2'></i> Product Published!";
-                status.className = "mt-6 text-center font-bold text-green-700 bg-green-50 p-4 rounded-lg border border-green-200 block";
+                status.innerHTML = "<div class='flex items-center justify-center'><i class='fas fa-check-circle text-xl mr-2'></i> Product Published Successfully!</div>";
+                status.className = "mt-6 text-center font-bold text-green-700 bg-green-50 p-4 rounded-lg block border border-green-200";
                 e.target.reset(); 
+                
+                // Naya product dalne ke baad Total Products count update karo
+                fetchDashboardStats();
+
             } catch (error) {
-                status.innerHTML = "<i class='fas fa-exclamation-triangle mr-2'></i> Error Publishing.";
-                status.className = "mt-6 text-center font-bold text-red-700 bg-red-50 p-4 rounded-lg border border-red-200 block";
+                status.innerHTML = "<div class='flex items-center justify-center'><i class='fas fa-exclamation-triangle text-xl mr-2'></i> Error! Check connection.</div>";
+                status.className = "mt-6 text-center font-bold text-red-700 bg-red-50 p-4 rounded-lg block border border-red-200";
             } finally {
-                btn.innerHTML = '<i class="fas fa-rocket mr-2"></i> Publish Product';
-                setTimeout(() => { status.classList.add('hidden'); }, 4000);
+                btn.innerHTML = originalBtnHtml;
+                btn.disabled = false;
+                btn.classList.remove('opacity-80', 'cursor-not-allowed');
+                setTimeout(() => { status.classList.add('hidden'); }, 5000);
             }
         });
     </script>
