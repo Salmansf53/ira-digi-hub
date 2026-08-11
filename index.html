@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>iRA Digi HUB - Digital Products Store</title>
+    <!-- Tailwind CSS for Styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome for Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-50 font-sans">
+
+    <!-- ================= NAVBAR ================= -->
+    <nav class="bg-[#0b0f19] text-white px-8 py-4 flex items-center justify-between border-b border-gray-800">
+        <div class="flex items-center space-x-8">
+            <div class="text-2xl font-bold cursor-pointer">
+                iRA<span class="text-purple-500">DIGI</span>HUB
+            </div>
+            
+            <button class="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-md flex items-center space-x-2 text-sm transition">
+                <i class="fas fa-th-large"></i>
+                <span>Browse Categories</span>
+                <i class="fas fa-chevron-down text-xs"></i>
+            </button>
+        </div>
+
+        <div class="flex-1 max-w-xl mx-8">
+            <div class="relative">
+                <input type="text" placeholder="Search for digital products..." class="w-full bg-[#1a1f2e] text-white px-4 py-2 rounded-full focus:outline-none focus:ring-1 focus:ring-purple-500 border border-gray-700">
+                <i class="fas fa-search absolute right-4 top-3 text-gray-400"></i>
+            </div>
+        </div>
+
+        <div class="flex items-center space-x-6 text-sm font-medium">
+            <a href="#" class="hover:text-purple-400 transition">Home</a>
+            <a href="#" class="hover:text-purple-400 transition">All Products</a>
+            <a href="#" class="hover:text-purple-400 transition">About</a>
+            <a href="#" class="hover:text-purple-400 transition">Blog</a>
+            <a href="#" class="hover:text-purple-400 transition">Contact</a>
+            <div class="flex items-center space-x-4 border-l border-gray-700 pl-6">
+                <div class="relative cursor-pointer hover:text-purple-400 transition">
+                    <i class="fas fa-shopping-cart text-xl"></i>
+                    <span class="absolute -top-2 -right-2 bg-purple-600 text-white text-[10px] rounded-full h-4 w-4 flex items-center justify-center">0</span>
+                </div>
+                <i class="far fa-user-circle text-2xl cursor-pointer hover:text-purple-400 transition"></i>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ================= HERO SECTION ================= -->
+    <header class="bg-[#0b0f19] text-white pt-16 pb-24 px-8 relative overflow-hidden">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center relative z-10">
+            <!-- Text Content -->
+            <div class="md:w-1/2 pr-8">
+                <div class="inline-flex items-center space-x-2 bg-gray-800 rounded-full px-3 py-1 text-xs mb-6 border border-gray-700">
+                    <i class="fas fa-star text-yellow-500"></i>
+                    <span class="text-gray-300">Premium Digital Products</span>
+                </div>
+                
+                <h1 class="text-5xl md:text-6xl font-bold leading-tight mb-6">
+                    Digital Products <br>
+                    That <span class="text-purple-500">Grow Your Business</span>
+                </h1>
+                
+                <p class="text-gray-400 text-lg mb-8 max-w-lg">
+                    Ready-to-use templates, tools, and resources to save time, work smarter, and scale faster.
+                </p>
+                
+                <div class="grid grid-cols-2 gap-4 mb-8 text-sm">
+                    <div class="flex items-center space-x-3">
+                        <div class="text-purple-500 text-xl"><i class="fas fa-download"></i></div>
+                        <div>
+                            <div class="font-bold">Instant Download</div>
+                            <div class="text-gray-400 text-xs">Get instantly</div>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-3">
+                        <div class="text-purple-500 text-xl"><i class="fas fa-gem"></i></div>
+                        <div>
+                            <div class="font-bold">Premium Quality</div>
+                            <div class="text-gray-400 text-xs">Made with care</div>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-3">
+                        <div class="text-purple-500 text-xl"><i class="fas fa-infinity"></i></div>
+                        <div>
+                            <div class="font-bold">Lifetime Access</div>
+                            <div class="text-gray-400 text-xs">Use forever</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="flex items-center space-x-4">
+                    <button class="bg-purple-600 hover:bg-purple-700 px-8 py-3 rounded-md font-medium flex items-center space-x-2 transition">
+                        <span>Browse All Products</span>
+                        <i class="fas fa-arrow-right text-sm"></i>
+                    </button>
+                    <button class="border border-gray-600 hover:bg-gray-800 px-8 py-3 rounded-md font-medium flex items-center space-x-2 transition">
+                        <span>How It Works</span>
+                        <i class="far fa-play-circle"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Floating Image Mockup Placeholder -->
+            <div class="md:w-1/2 mt-12 md:mt-0 relative">
+                <!-- Using a gradient box to simulate the mockups from the image -->
+                <div class="bg-gradient-to-tr from-purple-900/40 to-blue-900/40 w-full h-[400px] rounded-2xl border border-gray-700 flex flex-col items-center justify-center shadow-[0_0_80px_rgba(124,58,237,0.2)]">
+                    <i class="fas fa-laptop-code text-6xl text-purple-400 mb-4 opacity-50"></i>
+                    <p class="text-gray-400 italic">Dashboard & Template Mockups Go Here</p>
+                    <p class="text-xs text-gray-500 mt-2">(We will add exact images later)</p>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- ================= STATS BAR ================= -->
+    <div class="max-w-6xl mx-auto -mt-8 relative z-20 px-4">
+        <div class="bg-white rounded-xl shadow-md border border-gray-100 p-6 flex flex-wrap justify-between items-center text-sm">
+            <div class="flex items-center space-x-3 w-1/2 md:w-1/4 mb-4 md:mb-0">
+                <div class="bg-purple-50 text-purple-600 p-3 rounded-full text-lg"><i class="fas fa-medal"></i></div>
+                <div>
+                    <div class="font-bold text-gray-900 text-lg">10,000+</div>
+                    <div class="text-gray-500 text-xs">Happy Customers</div>
+                </div>
+            </div>
+            <div class="flex items-center space-x-3 w-1/2 md:w-1/4 mb-4 md:mb-0">
+                <div class="bg-blue-50 text-blue-500 p-3 rounded-full text-lg"><i class="fas fa-shopping-bag"></i></div>
+                <div>
+                    <div class="font-bold text-gray-900 text-lg">500+</div>
+                    <div class="text-gray-500 text-xs">Premium Products</div>
+                </div>
+            </div>
+            <div class="flex items-center space-x-3 w-1/2 md:w-1/4">
+                <div class="bg-yellow-50 text-yellow-500 p-3 rounded-full text-lg"><i class="fas fa-star"></i></div>
+                <div>
+                    <div class="font-bold text-gray-900 text-lg">4.9 <i class="fas fa-star text-xs text-yellow-500"></i></div>
+                    <div class="text-gray-500 text-xs">Average Rating</div>
+                </div>
+            </div>
+            <div class="flex items-center space-x-3 w-1/2 md:w-1/4">
+                <div class="bg-purple-50 text-purple-500 p-3 rounded-full text-lg"><i class="far fa-clock"></i></div>
+                <div>
+                    <div class="font-bold text-gray-900 text-lg">24/7</div>
+                    <div class="text-gray-500 text-xs">Customer Support</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= SHOP BY CATEGORY ================= -->
+    <section class="max-w-7xl mx-auto pt-20 pb-16 px-8">
+        <div class="flex justify-between items-end mb-8">
+            <h2 class="text-2xl font-bold text-gray-900">Shop by Category</h2>
+            <a href="#" class="text-purple-600 font-medium hover:underline text-sm">View All Categories</a>
+        </div>
+        <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-4">
+            
+            <div class="bg-white border border-gray-100 rounded-xl p-4 text-center hover:shadow-lg transition cursor-pointer">
+                <div class="bg-green-50 text-green-600 w-16 h-16 mx-auto rounded-xl flex items-center justify-center text-3xl mb-3"><i class="fas fa-file-excel"></i></div>
+                <h3 class="font-bold text-gray-800 text-sm">Excel Templates</h3>
+                <p class="text-xs text-gray-500 mt-1">120+ Products</p>
+            </div>
+            
+            <div class="bg-white border border-gray-100 rounded-xl p-4 text-center hover:shadow-lg transition cursor-pointer">
+                <div class="bg-blue-50 text-blue-600 w-16 h-16 mx-auto rounded-xl flex items-center justify-center text-3xl mb-3"><i class="fas fa-briefcase"></i></div>
+                <h3 class="font-bold text-gray-800 text-sm">Business Templates</h3>
+                <p class="text-xs text-gray-500 mt-1">85+ Products</p>
+            </div>
+            
+            <div class="bg-white border border-gray-100 rounded-xl p-4 text-center hover:shadow-lg transition cursor-pointer">
+                <div class="bg-cyan-50 text-cyan-500 w-16 h-16 mx-auto rounded-xl flex items-center justify-center text-3xl mb-3"><i class="fas fa-layer-group"></i></div>
+                <h3 class="font-bold text-gray-800 text-sm">Canva Templates</h3>
+                <p class="text-xs text-gray-500 mt-1">150+ Products</p>
+            </div>
+             
+            <div class="bg-white border border-gray-100 rounded-xl p-4 text-center hover:shadow-lg transition cursor-pointer">
+                <div class="bg-yellow-50 text-yellow-600 w-16 h-16 mx-auto rounded-xl flex items-center justify-center text-3xl mb-3"><i class="fas fa-dollar-sign"></i></div>
+                <h3 class="font-bold text-gray-800 text-sm">Finance & Accounting</h3>
+                <p class="text-xs text-gray-500 mt-1">90+ Products</p>
+            </div>
+            
+            <div class="bg-white border border-gray-100 rounded-xl p-4 text-center hover:shadow-lg transition cursor-pointer">
+                <div class="bg-pink-50 text-pink-500 w-16 h-16 mx-auto rounded-xl flex items-center justify-center text-3xl mb-3"><i class="far fa-calendar-check"></i></div>
+                <h3 class="font-bold text-gray-800 text-sm">Planners & Trackers</h3>
+                <p class="text-xs text-gray-500 mt-1">110+ Products</p>
+            </div>
+            
+            <div class="bg-white border border-gray-100 rounded-xl p-4 text-center hover:shadow-lg transition cursor-pointer">
+                <div class="bg-purple-50 text-purple-500 w-16 h-16 mx-auto rounded-xl flex items-center justify-center text-3xl mb-3"><i class="far fa-address-card"></i></div>
+                <h3 class="font-bold text-gray-800 text-sm">Resume & CV</h3>
+                <p class="text-xs text-gray-500 mt-1">60+ Products</p>
+            </div>
+            
+            <div class="bg-white border border-gray-100 rounded-xl p-4 text-center hover:shadow-lg transition cursor-pointer">
+                <div class="bg-orange-50 text-orange-500 w-16 h-16 mx-auto rounded-xl flex items-center justify-center text-3xl mb-3"><i class="fas fa-book-open"></i></div>
+                <h3 class="font-bold text-gray-800 text-sm">eBooks & Guides</h3>
+                <p class="text-xs text-gray-500 mt-1">75+ Products</p>
+            </div>
+            
+            <div class="bg-white border border-gray-100 rounded-xl p-4 text-center hover:shadow-lg transition cursor-pointer">
+                <div class="bg-indigo-50 text-indigo-500 w-16 h-16 mx-auto rounded-xl flex items-center justify-center text-3xl mb-3"><i class="fas fa-tools"></i></div>
+                <h3 class="font-bold text-gray-800 text-sm">Tools & Software</h3>
+                <p class="text-xs text-gray-500 mt-1">40+ Products</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= POPULAR PRODUCTS ================= -->
+    <section class="max-w-7xl mx-auto pb-16 px-8">
+        <div class="flex justify-between items-end mb-8">
+            <h2 class="text-2xl font-bold text-gray-900">Popular Products</h2>
+            <a href="#" class="text-purple-600 font-medium hover:underline text-sm">View All Products</a>
+        </div>
+        
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
+            
+            <!-- Product 1 -->
+            <div class="bg-white rounded-xl border border-gray-100 overflow-hidden hover:shadow-xl transition duration-300">
+                <div class="h-44 bg-green-700 flex flex-col items-center justify-center text-white relative">
+                    <span class="absolute top-2 left-2 bg-black/50 px-2 py-1 text-[10px] rounded">EXCEL</span>
+                    <i class="fas fa-file-excel text-4xl mb-2"></i>
+                    <span class="font-bold text-center px-4 leading-tight">BUSINESS ACCOUNTING</span>
+                </div>
+                <div class="p-4">
+                    <h3 class="font-bold text-gray-800 text-sm mb-2 leading-tight h-10">Complete Accounting Excel Template</h3>
+                    <div class="flex items-center text-xs mb-3">
+                        <i class="fas fa-star text-yellow-400"></i>
+                        <span class="font-bold ml-1 text-gray-800">4.9</span>
+                        <span class="text-gray-400 ml-1">(325)</span>
+                    </div>
+                    <div class="flex items-center justify-between border-t border-gray-50 pt-3">
+                        <div class="flex items-center space-x-2">
+                            <span class="text-red-500 font-bold text-lg">₹299</span>
+                            <span class="text-gray-400 text-sm line-through">₹699</span>
+                        </div>
+                        <span class="text-[11px] font-medium text-gray-500 bg-gray-100 px-2 py-1 rounded">1.2K+ Sales</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Product 2 -->
+            <div class="bg-white rounded-xl border border-gray-100 overflow-hidden hover:shadow-xl transition duration-300">
+                <div class="h-44 bg-blue-900 flex flex-col items-center justify-center text-white relative">
+                     <span class="absolute top-2 left-2 bg-black/50 px-2 py-1 text-[10px] rounded">EXCEL</span>
+                    <i class="fas fa-file-invoice-dollar text-4xl mb-2"></i>
+                    <span class="font-bold text-center px-4 leading-tight">INVOICE GENERATOR</span>
+                </div>
+                <div class="p-4">
+                    <h3 class="font-bold text-gray-800 text-sm mb-2 leading-tight h-10">Invoice Generator Excel Template</h3>
+                    <div class="flex items-center text-xs mb-3">
+                        <i class="fas fa-star text-yellow-400"></i>
+                        <span class="font-bold ml-1 text-gray-800">4.9</span>
+                        <span class="text-gray-400 ml-1">(210)</span>
+                    </div>
+                    <div class="flex items-center justify-between border-t border-gray-50 pt-3">
+                        <div class="flex items-center space-x-2">
+                            <span class="text-red-500 font-bold text-lg">₹199</span>
+                            <span class="text-gray-400 text-sm line-through">₹399</span>
+                        </div>
+                        <span class="text-[11px] font-medium text-gray-500 bg-gray-100 px-2 py-1 rounded">890+ Sales</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Product 3 -->
+            <div class="bg-white rounded-xl border border-gray-100 overflow-hidden hover:shadow-xl transition duration-300">
+                <div class="h-44 bg-purple-500 flex flex-col items-center justify-center text-white relative">
+                     <span class="absolute top-2 left-2 bg-black/50 px-2 py-1 text-[10px] rounded">PLANNER</span>
+                    <i class="fas fa-chart-pie text-4xl mb-2"></i>
+                    <span class="font-bold text-center px-4 leading-tight">ANNUAL BUDGET</span>
+                </div>
+                <div class="p-4">
+                    <h3 class="font-bold text-gray-800 text-sm mb-2 leading-tight h-10">Annual Budget Planner Excel</h3>
+                    <div class="flex items-center text-xs mb-3">
+                        <i class="fas fa-star text-yellow-400"></i>
+                        <span class="font-bold ml-1 text-gray-800">4.9</span>
+                        <span class="text-gray-400 ml-1">(180)</span>
+                    </div>
+                    <div class="flex items-center justify-between border-t border-gray-50 pt-3">
+                        <div class="flex items-center space-x-2">
+                            <span class="text-red-500 font-bold text-lg">₹249</span>
+                            <span class="text-gray-400 text-sm line-through">₹499</span>
+                        </div>
+                        <span class="text-[11px] font-medium text-gray-500 bg-gray-100 px-2 py-1 rounded">750+ Sales</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Product 4 -->
+            <div class="bg-white rounded-xl border border-gray-100 overflow-hidden hover:shadow-xl transition duration-300">
+                <div class="h-44 bg-cyan-700 flex flex-col items-center justify-center text-white relative">
+                    <span class="absolute top-2 left-2 bg-black/50 px-2 py-1 text-[10px] rounded">CANVA</span>
+                    <i class="fas fa-share-alt text-4xl mb-2"></i>
+                    <span class="font-bold text-center px-4 leading-tight">SOCIAL MEDIA CALENDAR</span>
+                </div>
+                <div class="p-4">
+                    <h3 class="font-bold text-gray-800 text-sm mb-2 leading-tight h-10">Social Media Content Calendar Canva</h3>
+                    <div class="flex items-center text-xs mb-3">
+                        <i class="fas fa-star text-yellow-400"></i>
+                        <span class="font-bold ml-1 text-gray-800">4.8</span>
+                        <span class="text-gray-400 ml-1">(95)</span>
+                    </div>
+                    <div class="flex items-center justify-between border-t border-gray-50 pt-3">
+                        <div class="flex items-center space-x-2">
+                            <span class="text-red-500 font-bold text-lg">₹149</span>
+                            <span class="text-gray-400 text-sm line-through">₹299</span>
+                        </div>
+                        <span class="text-[11px] font-medium text-gray-500 bg-gray-100 px-2 py-1 rounded">620+ Sales</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Product 5 -->
+            <div class="bg-white rounded-xl border border-gray-100 overflow-hidden hover:shadow-xl transition duration-300">
+                <div class="h-44 bg-gray-900 flex flex-col items-center justify-center text-white relative">
+                     <span class="absolute top-2 left-2 bg-white/20 px-2 py-1 text-[10px] rounded">DOCUMENT</span>
+                    <i class="fas fa-building text-4xl mb-2"></i>
+                    <span class="font-bold text-center px-4 leading-tight">BUSINESS PLAN</span>
+                </div>
+                <div class="p-4">
+                    <h3 class="font-bold text-gray-800 text-sm mb-2 leading-tight h-10">Business Plan Template Word</h3>
+                    <div class="flex items-center text-xs mb-3">
+                        <i class="fas fa-star text-yellow-400"></i>
+                        <span class="font-bold ml-1 text-gray-800">5.0</span>
+                        <span class="text-gray-400 ml-1">(130)</span>
+                    </div>
+                    <div class="flex items-center justify-between border-t border-gray-50 pt-3">
+                        <div class="flex items-center space-x-2">
+                            <span class="text-red-500 font-bold text-lg">₹349</span>
+                            <span class="text-gray-400 text-sm line-through">₹699</span>
+                        </div>
+                        <span class="text-[11px] font-medium text-gray-500 bg-gray-100 px-2 py-1 rounded">980+ Sales</span>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </section>
+
+    <!-- ================= WHY CHOOSE US ================= -->
+    <section class="max-w-7xl mx-auto pb-16 px-8">
+        <div class="bg-white border border-gray-100 rounded-2xl p-8 flex flex-wrap items-center text-sm shadow-sm">
+            <h3 class="w-full text-center text-xl font-bold mb-8 text-gray-900">Why Choose Us?</h3>
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 w-full text-center md:text-left">
+                
+                <div class="flex flex-col md:flex-row items-center space-x-0 md:space-x-3">
+                    <div class="text-purple-600 text-2xl mb-2 md:mb-0"><i class="fas fa-download"></i></div>
+                    <div>
+                        <div class="font-bold text-gray-800">Instant Download</div>
+                        <div class="text-[11px] text-gray-500 leading-tight">Get your files instantly after purchase</div>
+                    </div>
+                </div>
+                
+                <div class="flex flex-col md:flex-row items-center space-x-0 md:space-x-3">
+                    <div class="text-purple-600 text-2xl mb-2 md:mb-0"><i class="fas fa-gem"></i></div>
+                    <div>
+                        <div class="font-bold text-gray-800">Premium Quality</div>
+                        <div class="text-[11px] text-gray-500 leading-tight">High-quality, professionally designed</div>
+                    </div>
+                </div>
+                
+                <div class="flex flex-col md:flex-row items-center space-x-0 md:space-x-3">
+                    <div class="text-purple-600 text-2xl mb-2 md:mb-0"><i class="fas fa-magic"></i></div>
+                    <div>
+                        <div class="font-bold text-gray-800">Easy to Use</div>
+                        <div class="text-[11px] text-gray-500 leading-tight">Beginner-friendly and easy to customize</div>
+                    </div>
+                </div>
+                
+                <div class="flex flex-col md:flex-row items-center space-x-0 md:space-x-3">
+                    <div class="text-purple-600 text-2xl mb-2 md:mb-0"><i class="fas fa-infinity"></i></div>
+                    <div>
+                        <div class="font-bold text-gray-800">Lifetime Access</div>
+                        <div class="text-[11px] text-gray-500 leading-tight">Use the products forever</div>
+                    </div>
+                </div>
+                
+                <div class="flex flex-col md:flex-row items-center space-x-0 md:space-x-3">
+                    <div class="text-purple-600 text-2xl mb-2 md:mb-0"><i class="fas fa-shield-alt"></i></div>
+                    <div>
+                        <div class="font-bold text-gray-800">Secure Payment</div>
+                        <div class="text-[11px] text-gray-500 leading-tight">100% secure payment guaranteed</div>
+                    </div>
+                </div>
+                
+                <div class="flex flex-col md:flex-row items-center space-x-0 md:space-x-3">
+                    <div class="text-purple-600 text-2xl mb-2 md:mb-0"><i class="fas fa-undo"></i></div>
+                    <div>
+                        <div class="font-bold text-gray-800">Money Back</div>
+                        <div class="text-[11px] text-gray-500 leading-tight">7-day money back guarantee</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= TESTIMONIALS ================= -->
+    <section class="max-w-7xl mx-auto pb-24 px-8">
+        <div class="flex justify-between items-end mb-8">
+            <h2 class="text-2xl font-bold text-gray-900">What Our Customers Say</h2>
+            <a href="#" class="text-purple-600 font-medium hover:underline text-sm">View All Reviews</a>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            
+            <div class="bg-white border border-gray-100 rounded-xl p-6 shadow-sm relative">
+                <i class="fas fa-quote-right absolute top-6 right-6 text-3xl text-gray-100"></i>
+                <div class="flex items-center space-x-4 mb-4">
+                    <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center text-blue-600 font-bold text-xl">R</div>
+                    <div>
+                        <div class="font-bold text-gray-800">Rohit Sharma</div>
+                        <div class="text-xs text-gray-500">Business Owner</div>
+                    </div>
+                </div>
+                <div class="text-yellow-400 text-xs mb-3">
+                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                </div>
+                <p class="text-sm text-gray-600 italic">"The accounting template saved me 10+ hours every week. Highly recommended!"</p>
+            </div>
+            
+            <div class="bg-white border border-gray-100 rounded-xl p-6 shadow-sm relative">
+                <i class="fas fa-quote-right absolute top-6 right-6 text-3xl text-gray-100"></i>
+                <div class="flex items-center space-x-4 mb-4">
+                    <div class="w-12 h-12 bg-pink-100 rounded-full flex items-center justify-center text-pink-600 font-bold text-xl">P</div>
+                    <div>
+                        <div class="font-bold text-gray-800">Priya Mehta</div>
+                        <div class="text-xs text-gray-500">Freelancer</div>
+                    </div>
+                </div>
+                <div class="text-yellow-400 text-xs mb-3">
+                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                </div>
+                <p class="text-sm text-gray-600 italic">"Beautiful templates and super easy to use. Worth every single penny!"</p>
+            </div>
+            
+            <div class="bg-white border border-gray-100 rounded-xl p-6 shadow-sm relative">
+                <i class="fas fa-quote-right absolute top-6 right-6 text-3xl text-gray-100"></i>
+                <div class="flex items-center space-x-4 mb-4">
+                    <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center text-green-600 font-bold text-xl">A</div>
+                    <div>
+                        <div class="font-bold text-gray-800">Amit Verma</div>
+                        <div class="text-xs text-gray-500">Startup Founder</div>
+                    </div>
+                </div>
+                <div class="text-yellow-400 text-xs mb-3">
+                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                </div>
+                <p class="text-sm text-gray-600 italic">"Best digital products store! Great quality and excellent customer support."</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= NEWSLETTER & FOOTER ================= -->
+    <div class="bg-[#0b0f19] text-white pt-16 mt-8 relative">
+        
+        <!-- Newsletter Box (Floating) -->
+        <div class="absolute left-0 right-0 -top-16 px-8">
+            <div class="max-w-5xl mx-auto bg-[#1a233a] rounded-2xl border border-gray-700 p-8 flex flex-col md:flex-row items-center justify-between shadow-2xl">
+                <div class="flex items-center space-x-4 mb-6 md:mb-0">
+                    <div class="bg-white text-purple-600 w-14 h-14 flex items-center justify-center rounded-full text-2xl">
+                        <i class="far fa-envelope"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold">Stay Updated</h3>
+                        <p class="text-sm text-gray-400 mt-1">Get exclusive deals, new product updates, and helpful tips.</p>
+                    </div>
+                </div>
+                <div class="flex w-full md:w-auto">
+                    <input type="email" placeholder="Enter your email address" class="w-full md:w-72 bg-white text-gray-900 px-4 py-3 rounded-l-md focus:outline-none">
+                    <button class="bg-purple-600 hover:bg-purple-700 px-6 py-3 rounded-r-md font-medium transition">Subscribe</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer Links (Pushed down to accommodate floating newsletter) -->
+        <footer class="max-w-7xl mx-auto px-8 pt-20 pb-12 grid grid-cols-1 md:grid-cols-5 gap-8 border-b border-gray-800">
+            <div class="col-span-2">
+                <div class="text-2xl font-bold mb-4">
+                    iRA<span class="text-purple-500">DIGI</span>HUB
+                </div>
+                <p class="text-gray-400 text-sm mb-6 max-w-sm">
+                    Your one-stop shop for premium digital products. Download, use and grow your business instantly.
+                </p>
+                <div class="flex space-x-4">
+                    <a href="#" class="w-8 h-8 rounded-full bg-gray-800 flex items-center justify-center hover:bg-purple-600 transition"><i class="fab fa-facebook-f text-sm"></i></a>
+                    <a href="#" class="w-8 h-8 rounded-full bg-gray-800 flex items-center justify-center hover:bg-purple-600 transition"><i class="fab fa-instagram text-sm"></i></a>
+                    <a href="#" class="w-8 h-8 rounded-full bg-gray-800 flex items-center justify-center hover:bg-purple-600 transition"><i class="fab fa-twitter text-sm"></i></a>
+                    <a href="#" class="w-8 h-8 rounded-full bg-gray-800 flex items-center justify-center hover:bg-purple-600 transition"><i class="fab fa-youtube text-sm"></i></a>
+                </div>
+            </div>
+            
+            <div>
+                <h4 class="font-bold text-lg mb-4">Quick Links</h4>
+                <ul class="space-y-2 text-sm text-gray-400">
+                    <li><a href="#" class="hover:text-purple-400 transition">Home</a></li>
+                    <li><a href="#" class="hover:text-purple-400 transition">All Products</a></li>
+                    <li><a href="#" class="hover:text-purple-400 transition">About Us</a></li>
+                    <li><a href="#" class="hover:text-purple-400 transition">Blog</a></li>
+                    <li><a href="#" class="hover:text-purple-400 transition">Contact Us</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 class="font-bold text-lg mb-4">Categories</h4>
+                <ul class="space-y-2 text-sm text-gray-400">
+                    <li><a href="#" class="hover:text-purple-400 transition">Excel Templates</a></li>
+                    <li><a href="#" class="hover:text-purple-400 transition">Business Templates</a></li>
+                    <li><a href="#" class="hover:text-purple-400 transition">Canva Templates</a></li>
+                    <li><a href="#" class="hover:text-purple-400 transition">Finance & Accounting</a></li>
+                    <li><a href="#" class="hover:text-purple-400 transition">Planners & Trackers</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 class="font-bold text-lg mb-4">Contact Info</h4>
+                <ul class="space-y-3 text-sm text-gray-400">
+                    <li class="flex items-center space-x-3">
+                        <i class="far fa-envelope text-purple-500"></i>
+                        <span>hello@iradigihub.com</span>
+                    </li>
+                    <li class="flex items-center space-x-3">
+                        <i class="fas fa-phone-alt text-purple-500"></i>
+                        <span>+91 98765 43210</span>
+                    </li>
+                    <li class="flex items-start space-x-3">
+                        <i class="far fa-clock text-purple-500 mt-1"></i>
+                        <span>Monday - Saturday<br>10:00 AM - 8:00 PM</span>
+                    </li>
+                </ul>
+            </div>
+        </footer>
+        
+        <div class="text-center py-6 text-sm text-gray-500">
+            © 2026 iRA Digi HUB. All rights reserved.
+        </div>
+    </div>
+
+</body>
+</html>
