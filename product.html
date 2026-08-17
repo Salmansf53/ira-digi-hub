@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Details - iRA Digi HUB</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-50 font-sans flex flex-col min-h-screen">
+
+    <nav class="bg-[#0b0f19] text-white px-8 py-4 flex items-center justify-between border-b border-gray-800 sticky top-0 z-50">
+        <a href="index.html" class="text-2xl font-bold cursor-pointer">
+            iRA<span class="text-purple-500">DIGI</span>HUB
+        </a>
+        <div class="flex items-center space-x-6 text-sm font-medium">
+            <a href="store.html" class="hover:text-purple-400 transition">All Products</a>
+        </div>
+    </nav>
+
+    <div id="loading" class="flex-1 flex flex-col items-center justify-center py-20">
+        <i class="fas fa-circle-notch fa-spin text-5xl text-purple-600 mb-4"></i>
+    </div>
+
+    <main id="product-content" class="flex-1 max-w-6xl mx-auto px-4 py-12 hidden w-full">
+        <!-- Breadcrumb -->
+        <div class="text-sm text-gray-500 mb-6">
+            <a href="index.html" class="hover:text-purple-600">Home</a> <i class="fas fa-chevron-right text-xs mx-2"></i> 
+            <span id="bc-category" class="text-gray-700">Category</span> <i class="fas fa-chevron-right text-xs mx-2"></i> 
+            <span id="bc-name" class="text-gray-900 font-bold">Product</span>
+        </div>
+
+        <div class="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden flex flex-col md:flex-row mb-12">
+            
+            <!-- Left: Image Slider -->
+            <div class="md:w-1/2 p-6 bg-gray-50 flex flex-col">
+                <div class="w-full h-80 bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden mb-4 relative">
+                    <span id="badge-category" class="absolute top-3 left-3 bg-[#0b0f19] text-white px-3 py-1 text-[10px] font-bold rounded uppercase tracking-wider z-10 shadow-lg">CAT</span>
+                    <img id="main-image" src="" class="w-full h-full object-cover transition duration-300">
+                </div>
+                <!-- Thumbnails (Dynamically Populated) -->
+                <div id="thumbnail-container" class="flex space-x-3 overflow-x-auto py-2">
+                    <!-- JS will insert mini images here -->
+                </div>
+            </div>
+            
+            <!-- Right: Product Info & Buy Button -->
+            <div class="md:w-1/2 p-8 md:p-10 flex flex-col">
+                <h1 id="detail-name" class="text-3xl font-extrabold text-gray-900 mb-3 leading-tight">Product Name</h1>
+                
+                <div class="flex items-center space-x-4 mb-6">
+                    <div class="flex items-center text-yellow-400 text-sm">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
+                    </div>
+                    <span class="text-sm text-gray-500 font-medium border-b border-dashed border-gray-400 pb-0.5">4.9 (120+ Reviews)</span>
+                </div>
+
+                <div class="flex items-end space-x-3 mb-6">
+                    <span class="text-4xl font-black text-purple-600">₹<span id="detail-price">0</span></span>
+                    <span class="text-lg text-gray-400 line-through font-medium mb-1">₹499</span>
+                    <span class="bg-green-100 text-green-700 text-xs font-bold px-2 py-1 rounded mb-2">Save 60%</span>
+                </div>
+
+                <div class="mb-8 flex-grow">
+                    <h3 class="font-bold text-gray-800 mb-2 uppercase text-xs tracking-wider">Product Overview</h3>
+                    <p id="detail-desc" class="text-gray-600 text-sm leading-relaxed whitespace-pre-line"></p>
+                </div>
+
+                <!-- Security Icons (Trust Badges) -->
+                <div class="flex items-center justify-between bg-gray-50 border border-gray-100 rounded-lg p-4 mb-6">
+                    <div class="flex flex-col items-center text-center">
+                        <i class="fas fa-bolt text-yellow-500 text-xl mb-1"></i>
+                        <span class="text-[10px] font-bold text-gray-600 uppercase">Instant<br>Access</span>
+                    </div>
+                    <div class="flex flex-col items-center text-center">
+                        <i class="fas fa-lock text-green-500 text-xl mb-1"></i>
+                        <span class="text-[10px] font-bold text-gray-600 uppercase">Secure<br>Payment</span>
+                    </div>
+                    <div class="flex flex-col items-center text-center">
+                        <i class="fas fa-infinity text-blue-500 text-xl mb-1"></i>
+                        <span class="text-[10px] font-bold text-gray-600 uppercase">Lifetime<br>Updates</span>
+                    </div>
+                </div>
+
+                <!-- BUY NOW BUTTON (Navigates to checkout page later) -->
+                <button id="buyNowBtn" class="w-full bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white font-bold text-lg py-4 rounded-xl shadow-xl transition duration-300 flex items-center justify-center transform hover:-translate-y-1">
+                    <i class="fas fa-shopping-cart mr-2"></i> Buy Now - Secure Checkout
+                </button>
+            </div>
+        </div>
+
+        <!-- REVIEWS SECTION -->
+        <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-8">
+            <h2 class="text-xl font-bold text-gray-900 mb-6 border-b pb-4">Customer Reviews</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Static Review 1 -->
+                <div class="bg-gray-50 p-4 rounded-lg">
+                    <div class="flex items-center space-x-3 mb-2">
+                        <div class="w-8 h-8 bg-purple-200 text-purple-700 rounded-full flex items-center justify-center font-bold text-xs">R</div>
+                        <div>
+                            <div class="font-bold text-sm">Rahul Singh</div>
+                            <div class="text-yellow-400 text-[10px]"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                        </div>
+                    </div>
+                    <p class="text-sm text-gray-600 italic">"Highly recommended! The quality is top-notch and it saved me hours of work."</p>
+                </div>
+                <!-- Static Review 2 -->
+                <div class="bg-gray-50 p-4 rounded-lg">
+                    <div class="flex items-center space-x-3 mb-2">
+                        <div class="w-8 h-8 bg-blue-200 text-blue-700 rounded-full flex items-center justify-center font-bold text-xs">A</div>
+                        <div>
+                            <div class="font-bold text-sm">Amit Verma</div>
+                            <div class="text-yellow-400 text-[10px]"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                        </div>
+                    </div>
+                    <p class="text-sm text-gray-600 italic">"Instant delivery to Google Drive. Very easy and smooth checkout process."</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div class="bg-[#0b0f19] text-center py-6 text-sm text-gray-500 font-medium mt-12 w-full mt-auto">
+        © 2026 iRA Digi HUB. All rights reserved.
+    </div>
+
+    <!-- FIREBASE SCRIPT -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
+        import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyBdpekXgFaepzFN9Ecvvyw2jPh9FPikjYQ",
+            authDomain: "ira-digi-hub.firebaseapp.com",
+            databaseURL: "https://ira-digi-hub-default-rtdb.firebaseio.com",
+            projectId: "ira-digi-hub",
+            storageBucket: "ira-digi-hub.firebasestorage.app",
+            messagingSenderId: "501602413995",
+            appId: "1:501602413995:web:60ba782855226fd1a476ee"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const productId = urlParams.get('id');
+
+        async function fetchProductDetails() {
+            if (!productId) return;
+
+            try {
+                const docRef = doc(db, "products", productId);
+                const docSnap = await getDoc(docRef);
+
+                if (docSnap.exists()) {
+                    const product = docSnap.data();
+                    
+                    document.getElementById('bc-category').innerText = product.category;
+                    document.getElementById('bc-name').innerText = product.name;
+                    document.getElementById('badge-category').innerText = product.category;
+                    document.getElementById('detail-name').innerText = product.name;
+                    document.getElementById('detail-price').innerText = product.price;
+                    document.getElementById('detail-desc').innerText = product.description;
+                    
+                    // Setup Image Slider
+                    const mainImg = document.getElementById('main-image');
+                    const thumbContainer = document.getElementById('thumbnail-container');
+                    
+                    if (product.images && product.images.length > 0) {
+                        mainImg.src = product.images[0];
+                        
+                        product.images.forEach((imgUrl) => {
+                            const thumb = document.createElement('img');
+                            thumb.src = imgUrl;
+                            thumb.className = "w-16 h-16 object-cover rounded-md cursor-pointer border-2 border-transparent hover:border-purple-500 transition opacity-70 hover:opacity-100";
+                            thumb.onclick = () => { mainImg.src = imgUrl; }; // Swap logic
+                            thumbContainer.appendChild(thumb);
+                        });
+                    } else {
+                        mainImg.src = 'https://placehold.co/600x400/1e1e1e/white?text=No+Image';
+                    }
+                    
+                    // Buy Now Button will redirect to checkout with ID
+                    document.getElementById('buyNowBtn').onclick = () => {
+                        window.location.href = `checkout.html?id=${productId}`;
+                    };
+
+                    document.getElementById('loading').classList.add('hidden');
+                    document.getElementById('product-content').classList.remove('hidden');
+                }
+            } catch (error) {
+                console.error("Error fetching product:", error);
+            }
+        }
+
+        fetchProductDetails();
+    </script>
+</body>
+</html>

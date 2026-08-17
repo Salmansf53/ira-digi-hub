@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Store - iRA Digi HUB</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-50 font-sans flex flex-col min-h-screen">
+
+    <!-- NAVBAR -->
+    <nav class="bg-[#0b0f19] text-white px-8 py-4 flex items-center justify-between border-b border-gray-800 sticky top-0 z-50">
+        <a href="index.html" class="text-2xl font-bold cursor-pointer">
+            iRA<span class="text-purple-500">DIGI</span>HUB
+        </a>
+        <form id="searchForm" class="flex-1 max-w-xl mx-8 relative hidden md:block">
+            <input type="text" id="searchInput" placeholder="Search products..." class="w-full bg-[#1a1f2e] text-white px-4 py-2 rounded-full focus:outline-none focus:ring-1 focus:ring-purple-500 border border-gray-700">
+            <button type="submit" class="absolute right-4 top-2 text-gray-400 hover:text-purple-500"><i class="fas fa-search"></i></button>
+        </form>
+        <div class="flex items-center space-x-6 text-sm font-medium">
+            <a href="index.html" class="hover:text-purple-400 transition">Home</a>
+        </div>
+    </nav>
+
+    <main class="flex-1 max-w-7xl mx-auto px-4 py-10 w-full">
+        <!-- Page Header & Filters -->
+        <div class="flex flex-col md:flex-row justify-between items-center mb-8 bg-white p-4 rounded-xl shadow-sm border border-gray-100">
+            <div>
+                <h1 id="pageTitle" class="text-2xl font-bold text-gray-900">All Products</h1>
+                <p id="resultCount" class="text-sm text-gray-500">Loading...</p>
+            </div>
+            <div class="mt-4 md:mt-0 flex items-center space-x-3">
+                <span class="text-sm font-bold text-gray-700">Sort By:</span>
+                <select id="sortFilter" class="border border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-purple-500 outline-none text-sm bg-gray-50">
+                    <option value="newest">Newest First</option>
+                    <option value="low">Price: Low to High</option>
+                    <option value="high">Price: High to Low</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Products Grid -->
+        <div id="store-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-6">
+            <div class="col-span-full flex flex-col items-center justify-center py-16">
+                <i class="fas fa-circle-notch fa-spin text-4xl text-purple-600 mb-4"></i>
+                <p class="text-gray-500">Loading products...</p>
+            </div>
+        </div>
+    </main>
+
+    <!-- FOOTER -->
+    <div class="bg-[#0b0f19] text-center py-6 text-sm text-gray-500 font-medium w-full mt-auto">
+        © 2026 iRA Digi HUB.
+    </div>
+
+    <!-- FIREBASE FETCH SCRIPT -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
+        import { getFirestore, collection, getDocs, query, where, orderBy } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyBdpekXgFaepzFN9Ecvvyw2jPh9FPikjYQ",
+            authDomain: "ira-digi-hub.firebaseapp.com",
+            databaseURL: "https://ira-digi-hub-default-rtdb.firebaseio.com",
+            projectId: "ira-digi-hub",
+            storageBucket: "ira-digi-hub.firebasestorage.app",
+            messagingSenderId: "501602413995",
+            appId: "1:501602413995:web:60ba782855226fd1a476ee"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        // Get URL Parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        const categoryParam = urlParams.get('category');
+        const searchParam = urlParams.get('search');
+        
+        let allFetchedProducts = []; // Array to hold products for local sorting/filtering
+
+        // Set Page Title
+        if (categoryParam) document.getElementById('pageTitle').innerText = categoryParam;
+        if (searchParam) document.getElementById('pageTitle').innerText = `Search: "${searchParam}"`;
+
+        // Search Form Logic
+        document.getElementById('searchForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const val = document.getElementById('searchInput').value.trim();
+            if(val) window.location.href = `store.html?search=${encodeURIComponent(val)}`;
+        });
+
+        // Render UI
+        function renderProducts(products) {
+            const container = document.getElementById('store-container');
+            document.getElementById('resultCount').innerText = `${products.length} Products Found`;
+            container.innerHTML = '';
+
+            if (products.length === 0) {
+                container.innerHTML = `<div class="col-span-full text-center py-10"><i class="fas fa-box-open text-4xl text-gray-300 mb-3"></i><p class="text-gray-500 font-medium">No products found here.</p></div>`;
+                return;
+            }
+
+            products.forEach((product) => {
+                const mainImage = (product.images && product.images.length > 0) ? product.images[0] : 'https://placehold.co/600x400';
+                const html = `
+                    <a href="product.html?id=${product.id}" class="bg-white rounded-xl border border-gray-100 overflow-hidden hover:shadow-xl transition duration-300 flex flex-col h-full group">
+                        <div class="h-44 relative overflow-hidden bg-gray-100">
+                            <img src="${mainImage}" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                        </div>
+                        <div class="p-4 flex flex-col flex-grow">
+                            <h3 class="font-bold text-gray-800 text-sm mb-2 line-clamp-2">${product.name}</h3>
+                            <div class="flex items-center justify-between border-t border-gray-50 pt-3 mt-auto">
+                                <span class="text-purple-600 font-extrabold text-lg">₹${product.price}</span>
+                                <span class="text-[11px] font-bold text-white bg-[#0b0f19] px-3 py-1.5 rounded shadow">View <i class="fas fa-arrow-right"></i></span>
+                            </div>
+                        </div>
+                    </a>
+                `;
+                container.innerHTML += html;
+            });
+        }
+
+        // Fetch Data
+        async function loadData() {
+            let q;
+            if (categoryParam) {
+                q = query(collection(db, "products"), where("category", "==", categoryParam));
+            } else {
+                q = query(collection(db, "products"), orderBy("dateAdded", "desc"));
+            }
+
+            const snapshot = await getDocs(q);
+            snapshot.forEach(doc => allFetchedProducts.push({ id: doc.id, ...doc.data() }));
+
+            // Basic Search Filter (Client-side for simplicity)
+            if (searchParam) {
+                const lowerSearch = searchParam.toLowerCase();
+                allFetchedProducts = allFetchedProducts.filter(p => p.name.toLowerCase().includes(lowerSearch));
+            }
+
+            renderProducts(allFetchedProducts);
+        }
+
+        // Sort Logic
+        document.getElementById('sortFilter').addEventListener('change', (e) => {
+            const val = e.target.value;
+            let sorted = [...allFetchedProducts];
+            if (val === 'low') sorted.sort((a, b) => a.price - b.price);
+            if (val === 'high') sorted.sort((a, b) => b.price - a.price);
+            if (val === 'newest') sorted.sort((a, b) => new Date(b.dateAdded) - new Date(a.dateAdded));
+            renderProducts(sorted);
+        });
+
+        loadData();
+    </script>
+</body>
+</html>

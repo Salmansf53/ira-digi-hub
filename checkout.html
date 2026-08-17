@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secure Checkout - iRA Digi HUB</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <!-- EMAILJS SDK -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+</head>
+<body class="bg-gray-50 font-sans flex flex-col min-h-screen">
+
+    <!-- SECURE NAVBAR -->
+    <nav class="bg-white border-b border-gray-200 px-8 py-4 flex items-center justify-between sticky top-0 z-50">
+        <a href="index.html" class="text-2xl font-bold text-gray-900 cursor-pointer">
+            iRA<span class="text-purple-600">DIGI</span>HUB
+        </a>
+        <div class="flex items-center text-green-600 font-bold text-sm">
+            <i class="fas fa-lock mr-2"></i> 100% Secure Checkout
+        </div>
+    </nav>
+
+    <!-- LOADING SCREEN -->
+    <div id="loading" class="flex-1 flex flex-col items-center justify-center py-20">
+        <i class="fas fa-circle-notch fa-spin text-5xl text-purple-600 mb-4"></i>
+        <p class="text-gray-500 font-medium text-lg">Preparing your secure checkout...</p>
+    </div>
+
+    <!-- MAIN CHECKOUT SECTION -->
+    <main id="checkout-content" class="flex-1 max-w-6xl mx-auto px-4 py-10 w-full hidden">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            
+            <!-- Left: Customer Details Form -->
+            <div class="md:col-span-2">
+                <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-8">
+                    <h2 class="text-xl font-bold text-gray-900 mb-6 border-b pb-4">1. Billing Details</h2>
+                    
+                    <form id="checkoutForm" class="space-y-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-sm font-bold text-gray-700 mb-2">Full Name *</label>
+                                <input type="text" id="custName" required placeholder="Mohammad Salman" class="w-full border border-gray-300 rounded-lg p-3.5 focus:ring-2 focus:ring-purple-500 focus:outline-none bg-gray-50 hover:bg-white transition">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-bold text-gray-700 mb-2">Phone Number *</label>
+                                <input type="tel" id="custPhone" required placeholder="+91 9876543210" class="w-full border border-gray-300 rounded-lg p-3.5 focus:ring-2 focus:ring-purple-500 focus:outline-none bg-gray-50 hover:bg-white transition">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-bold text-gray-700 mb-2">Email Address (For Invoice & Backup Link) *</label>
+                            <input type="email" id="custEmail" required placeholder="salman@example.com" class="w-full border border-gray-300 rounded-lg p-3.5 focus:ring-2 focus:ring-purple-500 focus:outline-none bg-gray-50 hover:bg-white transition">
+                        </div>
+
+                        <div class="bg-purple-50 border border-purple-100 rounded-lg p-4 mt-6">
+                            <h3 class="font-bold text-purple-800 text-sm mb-1"><i class="fas fa-info-circle mr-1"></i> Digital Delivery</h3>
+                            <p class="text-xs text-purple-600">The product file will be unlocked instantly on the screen after successful payment.</p>
+                        </div>
+
+                        <button type="submit" id="payBtn" class="w-full bg-gray-900 hover:bg-black text-white font-bold text-lg py-4 rounded-xl shadow-lg transition duration-300 flex items-center justify-center mt-6">
+                            Pay ₹<span id="btnPrice" class="mx-1">0</span> Securely <i class="fas fa-arrow-right ml-2"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Right: Order Summary -->
+            <div class="md:col-span-1">
+                <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 sticky top-24">
+                    <h2 class="text-lg font-bold text-gray-900 mb-4 border-b pb-3">Order Summary</h2>
+                    
+                    <div class="flex items-center space-x-4 mb-6">
+                        <div class="w-16 h-16 bg-gray-100 rounded-md overflow-hidden flex-shrink-0">
+                            <img id="summary-img" src="" class="w-full h-full object-cover">
+                        </div>
+                        <div>
+                            <h3 id="summary-name" class="font-bold text-gray-800 text-sm line-clamp-2">Product Name</h3>
+                            <p id="summary-cat" class="text-xs text-gray-500 mt-1 uppercase">Category</p>
+                        </div>
+                    </div>
+
+                    <div class="space-y-3 text-sm text-gray-600 border-b pb-4 mb-4">
+                        <div class="flex justify-between">
+                            <span>Original Price</span>
+                            <span class="line-through">₹499</span>
+                        </div>
+                        <div class="flex justify-between text-green-600 font-medium">
+                            <span>Discount</span>
+                            <span>- Instant Applied</span>
+                        </div>
+                    </div>
+
+                    <div class="flex justify-between items-center text-lg font-black text-gray-900 mb-6">
+                        <span>Total to Pay</span>
+                        <span>₹<span id="summary-price">0</span></span>
+                    </div>
+
+                    <div class="flex items-center justify-center space-x-2 text-xl text-gray-300">
+                        <i class="fab fa-cc-visa text-blue-700"></i>
+                        <i class="fab fa-cc-mastercard text-red-600"></i>
+                        <i class="fas fa-rupee-sign text-blue-500"></i>
+                        <i class="fab fa-google-pay text-blue-400"></i>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </main>
+
+    <!-- SUCCESS SCREEN (Hidden by default, unlocks after payment) -->
+    <div id="success-screen" class="flex-1 max-w-3xl mx-auto px-4 py-20 w-full hidden">
+        <div class="bg-white rounded-2xl shadow-xl border border-green-100 p-10 text-center relative overflow-hidden">
+            <div class="absolute top-0 left-0 w-full h-2 bg-green-500"></div>
+            <div class="w-20 h-20 bg-green-100 text-green-500 rounded-full flex items-center justify-center text-4xl mx-auto mb-6">
+                <i class="fas fa-check"></i>
+            </div>
+            <h1 class="text-3xl font-black text-gray-900 mb-2">Payment Successful!</h1>
+            <p class="text-gray-500 mb-8">Thank you <span id="buyerName" class="font-bold"></span>! Invoice has been sent to your email.</p>
+            
+            <div class="bg-gray-50 rounded-xl p-6 mb-8 inline-block max-w-md w-full border border-gray-200">
+                <p class="text-sm font-bold text-gray-800 mb-4">Your digital product is ready for download:</p>
+                <!-- DYNAMIC DOWNLOAD LINK -->
+                <a id="downloadFileBtn" href="#" target="_blank" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-lg shadow-md transition duration-300 flex items-center justify-center">
+                    <i class="fas fa-cloud-download-alt mr-2"></i> Access Google Drive File
+                </a>
+            </div>
+            
+            <div>
+                <a href="index.html" class="text-purple-600 font-medium hover:underline"><i class="fas fa-arrow-left mr-1"></i> Return to Store</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- FIREBASE FETCH, EMAILJS & PAYMENT SIMULATION SCRIPT -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
+        import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
+
+        // ==========================================
+        // 1. EMAILJS PUBLIC KEY
+        // ==========================================
+        emailjs.init("I7nB7-Tl9AmncoGuT"); 
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyBdpekXgFaepzFN9Ecvvyw2jPh9FPikjYQ",
+            authDomain: "ira-digi-hub.firebaseapp.com",
+            databaseURL: "https://ira-digi-hub-default-rtdb.firebaseio.com",
+            projectId: "ira-digi-hub",
+            storageBucket: "ira-digi-hub.firebasestorage.app",
+            messagingSenderId: "501602413995",
+            appId: "1:501602413995:web:60ba782855226fd1a476ee"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const productId = urlParams.get('id');
+        let productData = null;
+
+        async function loadCheckout() {
+            if (!productId) {
+                document.getElementById('loading').innerHTML = `<h2 class="text-2xl text-red-500 font-bold">Invalid Checkout URL</h2><a href="index.html" class="text-purple-600 mt-4 underline">Go Back to Store</a>`;
+                return;
+            }
+
+            try {
+                const docRef = doc(db, "products", productId);
+                const docSnap = await getDoc(docRef);
+
+                if (docSnap.exists()) {
+                    productData = docSnap.data();
+                    
+                    document.getElementById('summary-name').innerText = productData.name;
+                    document.getElementById('summary-cat').innerText = productData.category;
+                    document.getElementById('summary-price').innerText = productData.price;
+                    document.getElementById('btnPrice').innerText = productData.price;
+                    
+                    const mainImage = (productData.images && productData.images.length > 0) ? productData.images[0] : 'https://placehold.co/600x400';
+                    document.getElementById('summary-img').src = mainImage;
+                    
+                    document.getElementById('loading').classList.add('hidden');
+                    document.getElementById('checkout-content').classList.remove('hidden');
+                } else {
+                    document.getElementById('loading').innerHTML = `<h2 class="text-2xl text-red-500 font-bold">Product not found</h2>`;
+                }
+            } catch (error) {
+                console.error(error);
+                document.getElementById('loading').innerHTML = `<h2 class="text-2xl text-red-500 font-bold">Connection Error</h2>`;
+            }
+        }
+
+        document.getElementById('checkoutForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const btn = document.getElementById('payBtn');
+            const custName = document.getElementById('custName').value;
+            const custEmail = document.getElementById('custEmail').value;
+            
+            // Payment Processing Animation
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Processing Securely...';
+            btn.disabled = true;
+            btn.classList.add('opacity-70');
+
+            setTimeout(() => {
+                
+                const templateParams = {
+                    customer_name: custName,
+                    to_email: custEmail,
+                    product_name: productData.name,
+                    amount: productData.price,
+                    download_link: productData.fileLink
+                };
+
+                // ==========================================
+                // 2. EMAILJS SEND FUNCTION (Service ID & Template ID)
+                // ==========================================
+                emailjs.send('service_ubir3a8', 'template_5500rzi', templateParams)
+                    .then(function(response) {
+                        console.log('Invoice Email Sent Successfully!', response.status, response.text);
+                    }, function(error) {
+                        console.log('Failed to send email...', error);
+                    });
+                // ==========================================
+
+                document.getElementById('checkout-content').classList.add('hidden');
+                
+                document.getElementById('buyerName').innerText = custName;
+                document.getElementById('downloadFileBtn').href = productData.fileLink; 
+                
+                document.getElementById('success-screen').classList.remove('hidden');
+            }, 2500); // 2.5 seconds simulation
+        });
+
+        loadCheckout();
+    </script>
+</body>
+</html>
