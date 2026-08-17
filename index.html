@@ -301,6 +301,7 @@
         </div>
     </div>
 
+    <!-- ================= FIREBASE DATABASE FETCH SCRIPT ================= -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
         import { getFirestore, collection, getDocs, query, orderBy, limit } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
@@ -322,7 +323,6 @@
             const container = document.getElementById('products-container');
             
             try {
-                // Fetch top 10 products sorted by newest first
                 const q = query(collection(db, "products"), orderBy("dateAdded", "desc"), limit(10));
                 const querySnapshot = await getDocs(q);
 
@@ -342,16 +342,21 @@
                 querySnapshot.forEach((doc) => {
                     const product = doc.data();
                     
-                    const mainImage = (product.images && product.images.length > 0) 
-                        ? product.images[0] 
-                        : 'https://placehold.co/600x400/1e1e1e/white?text=Digital+Product';
+                    let mainImage = 'https://placehold.co/600x400/1e1e1e/white?text=Digital+Product';
+                    
+                    if (product.images && Array.isArray(product.images) && product.images.length > 0 && product.images[0].trim() !== '') {
+                        mainImage = product.images[0];
+                    } else if (product.image && typeof product.image === 'string' && product.image.trim() !== '') {
+                        mainImage = product.image;
+                    } else if (product.imageUrl && typeof product.imageUrl === 'string' && product.imageUrl.trim() !== '') {
+                        mainImage = product.imageUrl;
+                    }
 
-                    // UPDATED: Now it points to product.html
                     const productHTML = `
                         <a href="product.html?id=${doc.id}" class="bg-white rounded-xl border border-gray-100 overflow-hidden hover:shadow-xl transition duration-300 flex flex-col h-full group cursor-pointer block">
                             <div class="h-44 relative overflow-hidden bg-gray-100">
-                                <span class="absolute top-2 left-2 bg-black/70 text-white px-2 py-1 text-[9px] font-bold rounded z-10 uppercase tracking-wider">${product.category}</span>
-                                <img src="${mainImage}" alt="${product.name}" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                                <span class="absolute top-2 left-2 bg-black/70 text-white px-2 py-1 text-[9px] font-bold rounded z-10 uppercase tracking-wider">${product.category || 'Product'}</span>
+                                <img src="${mainImage}" alt="${product.name}" onerror="this.onerror=null; this.src='https://placehold.co/600x400/1e1e1e/white?text=Digital+Product';" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
                             </div>
                             <div class="p-4 flex flex-col flex-grow">
                                 <h3 class="font-bold text-gray-800 text-sm mb-2 leading-tight line-clamp-2" title="${product.name}">${product.name}</h3>
@@ -363,7 +368,7 @@
                                 </div>
                                 
                                 <div class="flex items-center justify-between border-t border-gray-50 pt-3 mt-auto">
-                                    <span class="text-purple-600 font-extrabold text-lg">₹${product.price}</span>
+                                    <span class="text-purple-600 font-extrabold text-lg">₹${product.price || '99'}</span>
                                     <span class="text-[11px] font-bold text-white bg-[#0b0f19] group-hover:bg-purple-600 px-3 py-1.5 rounded transition shadow flex items-center">
                                         View Details <i class="fas fa-arrow-right ml-1"></i>
                                     </span>

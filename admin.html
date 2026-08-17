@@ -9,7 +9,6 @@
 </head>
 <body class="bg-gray-100 font-sans h-screen overflow-hidden">
 
-    <!-- ================= 1. LOGIN SCREEN (SECURE GATEWAY) ================= -->
     <div id="loginScreen" class="h-screen w-full flex items-center justify-center bg-[#0b0f19] absolute z-50">
         <div class="bg-white p-10 rounded-2xl shadow-2xl w-full max-w-md mx-4 relative overflow-hidden">
             <div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-purple-500 to-indigo-600"></div>
@@ -42,10 +41,8 @@
         </div>
     </div>
 
-    <!-- ================= 2. MAIN DASHBOARD ================= -->
     <div id="dashboardScreen" class="hidden flex h-screen w-full">
         
-        <!-- Sidebar -->
         <aside class="w-64 bg-[#0b0f19] text-white flex flex-col hidden md:flex shadow-2xl relative z-20">
             <div class="h-20 flex items-center px-8 border-b border-gray-800">
                 <div class="text-2xl font-bold tracking-wide">iRA<span class="text-purple-500">DIGI</span>HUB</div>
@@ -61,15 +58,20 @@
                         </a>
                     </li>
                     <li>
-                        <a href="#" class="flex items-center space-x-3 bg-gradient-to-r from-purple-600 to-purple-800 text-white px-4 py-3 rounded-lg shadow-md border border-purple-500/30 mt-2">
+                        <a href="#addProductForm" class="flex items-center space-x-3 bg-gradient-to-r from-purple-600 to-purple-800 text-white px-4 py-3 rounded-lg shadow-md border border-purple-500/30 mt-2">
                             <i class="fas fa-plus-circle w-5"></i>
-                            <span class="font-medium">Add Product</span>
+                            <span class="font-medium">Manage Products</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#converterTool" class="flex items-center space-x-3 text-gray-300 hover:text-white hover:bg-gray-800 px-4 py-3 rounded-lg transition duration-200 mt-2">
+                            <i class="fas fa-link w-5 text-blue-400"></i>
+                            <span class="font-medium">G-Drive Link Tool</span>
                         </a>
                     </li>
                 </ul>
             </div>
             
-            <!-- Admin Profile -->
             <div class="p-6 border-t border-gray-800 bg-[#131929]">
                 <div class="flex items-center justify-between">
                     <div class="flex items-center space-x-3">
@@ -83,7 +85,6 @@
                             </div>
                         </div>
                     </div>
-                    <!-- Logout Button -->
                     <button id="logoutBtn" class="text-gray-400 hover:text-red-500 transition" title="Logout">
                         <i class="fas fa-power-off"></i>
                     </button>
@@ -91,7 +92,6 @@
             </div>
         </aside>
 
-        <!-- Main Content Area -->
         <main class="flex-1 flex flex-col h-screen overflow-hidden bg-gray-50">
             
             <header class="h-20 bg-white border-b border-gray-200 flex items-center justify-between px-8 shadow-sm">
@@ -107,9 +107,7 @@
             <div class="flex-1 overflow-y-auto p-8">
                 <div class="max-w-6xl mx-auto">
                     
-                    <!-- ================= DYNAMIC STATS WIDGETS ================= -->
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-                        <!-- Stat Box 1: Total Products (LIVE) -->
                         <div class="bg-white p-6 rounded-xl border border-gray-100 shadow-sm flex items-center space-x-4 hover:shadow-md transition">
                             <div class="w-14 h-14 bg-purple-50 text-purple-600 rounded-xl flex items-center justify-center text-2xl">
                                 <i class="fas fa-boxes"></i>
@@ -122,18 +120,16 @@
                             </div>
                         </div>
                         
-                        <!-- Stat Box 2: Total Sales (Ready for Razorpay) -->
                         <div class="bg-white p-6 rounded-xl border border-gray-100 shadow-sm flex items-center space-x-4 hover:shadow-md transition opacity-80">
                             <div class="w-14 h-14 bg-blue-50 text-blue-600 rounded-xl flex items-center justify-center text-2xl">
                                 <i class="fas fa-wallet"></i>
                             </div>
                             <div>
                                 <div class="text-gray-400 text-sm font-medium mb-1">Total Sales Revenue</div>
-                                <div class="text-2xl font-bold text-gray-900">₹0 <span class="text-xs text-gray-400 ml-1 font-normal">(Awaiting Razorpay)</span></div>
+                                <div class="text-2xl font-bold text-gray-900">₹0 <span class="text-xs text-gray-400 ml-1 font-normal">(Awaiting Gateway)</span></div>
                             </div>
                         </div>
                         
-                        <!-- Stat Box 3: Store Visits (Ready for GA) -->
                         <div class="bg-white p-6 rounded-xl border border-gray-100 shadow-sm flex items-center space-x-4 hover:shadow-md transition opacity-80">
                             <div class="w-14 h-14 bg-green-50 text-green-600 rounded-xl flex items-center justify-center text-2xl">
                                 <i class="fas fa-chart-line"></i>
@@ -145,10 +141,35 @@
                         </div>
                     </div>
 
-                    <!-- ================= PRODUCT UPLOAD FORM ================= -->
-                    <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden mb-10">
+                    <div id="converterTool" class="bg-gradient-to-br from-indigo-900 to-purple-900 rounded-xl shadow-lg border border-indigo-700 overflow-hidden mb-8 text-white">
+                        <div class="px-8 py-5 border-b border-indigo-800 flex justify-between items-center bg-black/20">
+                            <h2 class="text-lg font-bold flex items-center"><i class="fas fa-wand-magic-sparkles text-yellow-400 mr-2"></i>Google Drive Direct Image Link Generator</h2>
+                        </div>
+                        <div class="p-8 space-y-4">
+                            <p class="text-sm text-indigo-200">Paste your Google Drive sharing link below to instantly generate a clean, direct image link for your store products.</p>
+                            
+                            <div class="flex flex-col md:flex-row gap-3">
+                                <input type="url" id="gdriveInput" placeholder="https://drive.google.com/file/d/.../view?usp=sharing" class="flex-1 bg-black/40 border border-indigo-600 rounded-lg p-3.5 text-white placeholder-indigo-300 focus:outline-none focus:ring-2 focus:ring-yellow-400 text-sm">
+                                <button type="button" onclick="convertDriveLink()" class="bg-yellow-500 hover:bg-yellow-400 text-gray-900 font-bold px-6 py-3.5 rounded-lg transition shadow-md flex items-center justify-center">
+                                    <i class="fas fa-bolt mr-2"></i> Generate Link
+                                </button>
+                            </div>
+
+                            <div id="converterResultBox" class="hidden mt-4 bg-black/50 border border-indigo-700 p-4 rounded-lg space-y-2">
+                                <label class="block text-xs font-bold text-yellow-400 uppercase tracking-wider">Your Direct Image Link:</label>
+                                <div class="flex items-center gap-2">
+                                    <input type="text" id="gdriveOutput" readonly class="flex-1 bg-gray-900 border border-gray-700 rounded p-2 text-xs text-green-400 font-mono focus:outline-none">
+                                    <button type="button" onclick="copyConvertedLink()" class="bg-purple-600 hover:bg-purple-500 text-white font-bold px-4 py-2 rounded text-xs transition flex items-center">
+                                        <i class="fas fa-copy mr-1"></i> Copy
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden mb-8">
                         <div class="bg-gray-50/50 px-8 py-5 border-b border-gray-100 flex justify-between items-center">
-                            <h2 class="text-lg font-bold text-gray-800"><i class="fas fa-cloud-upload-alt text-purple-500 mr-2"></i>Publish New Product</h2>
+                            <h2 id="formTitle" class="text-lg font-bold text-gray-800"><i class="fas fa-cloud-upload-alt text-purple-500 mr-2"></i>Publish New Product</h2>
                         </div>
                         
                         <div class="p-8">
@@ -200,13 +221,16 @@
                                     <label class="block text-sm font-bold text-gray-700 mb-2">Product Image Links (Comma Separated) <span class="text-red-500">*</span></label>
                                     <div class="relative">
                                         <span class="absolute top-4 left-0 flex items-center pl-4 text-purple-500"><i class="far fa-images"></i></span>
-                                        <textarea id="prodImageLink" required rows="2" placeholder="https://link1.com, https://link2.com" class="w-full border border-gray-300 rounded-lg p-3.5 pl-10 focus:ring-2 focus:ring-purple-500 focus:outline-none bg-gray-50/50 hover:bg-white transition"></textarea>
+                                        <textarea id="prodImageLink" required rows="2" placeholder="Use the tool above or paste links separated by commas" class="w-full border border-gray-300 rounded-lg p-3.5 pl-10 focus:ring-2 focus:ring-purple-500 focus:outline-none bg-gray-50/50 hover:bg-white transition"></textarea>
                                     </div>
                                 </div>
 
-                                <div class="pt-2">
-                                    <button type="submit" class="w-full md:w-auto px-10 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white font-bold py-4 rounded-lg transition duration-300 shadow-lg text-lg flex items-center justify-center">
+                                <div class="pt-2 flex flex-col md:flex-row space-y-3 md:space-y-0 md:space-x-4">
+                                    <button type="submit" id="submitBtn" class="w-full md:w-auto px-10 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white font-bold py-4 rounded-lg transition duration-300 shadow-lg text-lg flex items-center justify-center">
                                         <i class="fas fa-rocket mr-2"></i> Publish Product Live
+                                    </button>
+                                    <button type="button" id="cancelEditBtn" onclick="cancelEdit()" class="hidden w-full md:w-auto px-8 bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-4 rounded-lg transition duration-300 text-lg flex items-center justify-center">
+                                        Cancel Edit
                                     </button>
                                 </div>
                             </form>
@@ -214,15 +238,40 @@
                             <div id="statusMessage" class="mt-6 text-center font-bold hidden p-4 rounded-lg border"></div>
                         </div>
                     </div>
+
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden mb-10">
+                        <div class="bg-gray-50/50 px-8 py-5 border-b border-gray-100 flex justify-between items-center">
+                            <h2 class="text-lg font-bold text-gray-800"><i class="fas fa-list text-purple-500 mr-2"></i>Manage Uploaded Products</h2>
+                        </div>
+                        <div class="p-0 overflow-x-auto">
+                            <table class="w-full text-left border-collapse whitespace-nowrap">
+                                <thead>
+                                    <tr class="bg-gray-50 text-gray-500 text-xs uppercase tracking-wider border-b border-gray-100">
+                                        <th class="p-4 pl-8 font-bold">Product Name</th>
+                                        <th class="p-4 font-bold">Category</th>
+                                        <th class="p-4 font-bold">Price</th>
+                                        <th class="p-4 pr-8 font-bold text-right">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="adminProductList" class="divide-y divide-gray-100">
+                                    <tr>
+                                        <td colspan="4" class="text-center p-8 text-gray-500 font-medium">
+                                            <i class="fas fa-circle-notch fa-spin mr-2"></i> Loading products...
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </main>
     </div>
 
-    <!-- ================= FIREBASE SCRIPT (AUTH + DYNAMIC ANALYTICS) ================= -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
-        import { getFirestore, collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
+        import { getFirestore, collection, addDoc, getDocs, doc, deleteDoc, updateDoc, orderBy, query } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
         import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
 
         const firebaseConfig = {
@@ -241,17 +290,148 @@
 
         const loginScreen = document.getElementById('loginScreen');
         const dashboardScreen = document.getElementById('dashboardScreen');
+        
+        window.allProductsData = {};
+        window.editingProductId = null;
 
-        // Function: Fetch Live Total Products count from Database
-        async function fetchDashboardStats() {
+        // Tool: Google Drive Link Converter Script
+        window.convertDriveLink = () => {
+            const inputVal = document.getElementById('gdriveInput').value.trim();
+            const resultBox = document.getElementById('converterResultBox');
+            const outputBox = document.getElementById('gdriveOutput');
+
+            if (!inputVal) {
+                alert("Please paste a valid Google Drive link first!");
+                return;
+            }
+
+            let fileId = "";
+            // Extract File ID using Regex or splitting
+            if (inputVal.includes('/file/d/')) {
+                const parts = inputVal.split('/file/d/');
+                if (parts[1]) {
+                    fileId = parts[1].split('/')[0];
+                }
+            } else if (inputVal.includes('id=')) {
+                const urlParams = new URLSearchParams(inputVal.split('?')[1]);
+                fileId = urlParams.get('id');
+            }
+
+            if (fileId) {
+                const directLink = `https://drive.google.com/uc?export=view&id=${fileId}`;
+                outputBox.value = directLink;
+                resultBox.classList.remove('hidden');
+            } else {
+                alert("Invalid Google Drive link format! Please make sure it's a file sharing link.");
+            }
+        };
+
+        window.copyConvertedLink = () => {
+            const outputBox = document.getElementById('gdriveOutput');
+            outputBox.select();
+            outputBox.setSelectionRange(0, 99999); // For mobile devices
+            navigator.clipboard.writeText(outputBox.value);
+            alert("Direct Image Link copied to clipboard!");
+        };
+
+        // Function: Fetch Live Total Products count & populate Table
+        async function fetchDashboardData() {
+            const listContainer = document.getElementById('adminProductList');
             try {
-                const querySnapshot = await getDocs(collection(db, "products"));
+                const q = query(collection(db, "products"), orderBy("dateAdded", "desc"));
+                const querySnapshot = await getDocs(q);
+                
                 document.getElementById('statTotalProducts').innerText = querySnapshot.size;
+                listContainer.innerHTML = '';
+                window.allProductsData = {};
+
+                if (querySnapshot.empty) {
+                    listContainer.innerHTML = '<tr><td colspan="4" class="text-center p-8 text-gray-500">No products uploaded yet.</td></tr>';
+                    return;
+                }
+
+                querySnapshot.forEach((document) => {
+                    const data = document.data();
+                    window.allProductsData[document.id] = data;
+                    
+                    listContainer.innerHTML += `
+                        <tr class="hover:bg-purple-50/30 transition">
+                            <td class="p-4 pl-8 font-bold text-gray-800">
+                                <div class="truncate w-48 lg:w-64" title="${data.name}">${data.name}</div>
+                            </td>
+                            <td class="p-4 text-sm text-gray-500">
+                                <span class="bg-gray-100 px-3 py-1 rounded-full text-xs font-medium">${data.category}</span>
+                            </td>
+                            <td class="p-4 font-extrabold text-purple-600">₹${data.price}</td>
+                            <td class="p-4 pr-8 text-right space-x-2">
+                                <button onclick="window.editProduct('${document.id}')" class="text-blue-500 hover:text-white hover:bg-blue-500 bg-blue-50 px-3 py-2 rounded-md transition shadow-sm" title="Edit">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button onclick="window.deleteProduct('${document.id}')" class="text-red-500 hover:text-white hover:bg-red-500 bg-red-50 px-3 py-2 rounded-md transition shadow-sm" title="Delete">
+                                    <i class="fas fa-trash-alt"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    `;
+                });
             } catch (error) {
-                console.error("Error fetching stats:", error);
+                console.error("Error fetching data:", error);
                 document.getElementById('statTotalProducts').innerText = "Error";
+                listContainer.innerHTML = '<tr><td colspan="4" class="text-center p-8 text-red-500">Error loading products.</td></tr>';
             }
         }
+
+        // Global Delete Function
+        window.deleteProduct = async (id) => {
+            if (confirm("Are you absolutely sure you want to delete this product? This cannot be undone.")) {
+                try {
+                    await deleteDoc(doc(db, "products", id));
+                    alert("Product deleted successfully!");
+                    fetchDashboardData();
+                } catch (error) {
+                    console.error("Error deleting document: ", error);
+                    alert("Failed to delete product.");
+                }
+            }
+        };
+
+        // Global Edit Function
+        window.editProduct = (id) => {
+            const product = window.allProductsData[id];
+            if (!product) return;
+
+            window.editingProductId = id;
+            document.getElementById('formTitle').innerHTML = '<i class="fas fa-edit text-blue-500 mr-2"></i>Edit Product';
+            
+            document.getElementById('prodName').value = product.name;
+            document.getElementById('prodPrice').value = product.price;
+            document.getElementById('prodCategory').value = product.category;
+            document.getElementById('prodDesc').value = product.description;
+            document.getElementById('prodFileLink').value = product.fileLink;
+            document.getElementById('prodImageLink').value = product.images ? product.images.join(', ') : '';
+
+            const submitBtn = document.getElementById('submitBtn');
+            submitBtn.innerHTML = '<i class="fas fa-save mr-2"></i> Update Product';
+            submitBtn.classList.remove('from-purple-600', 'to-indigo-600', 'hover:from-purple-700', 'hover:to-indigo-700');
+            submitBtn.classList.add('from-blue-500', 'to-blue-700', 'hover:from-blue-600', 'hover:to-blue-800');
+            
+            document.getElementById('cancelEditBtn').classList.remove('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        };
+
+        // Global Cancel Edit Function
+        window.cancelEdit = () => {
+            window.editingProductId = null;
+            document.getElementById('addProductForm').reset();
+            document.getElementById('formTitle').innerHTML = '<i class="fas fa-cloud-upload-alt text-purple-500 mr-2"></i>Publish New Product';
+            
+            const submitBtn = document.getElementById('submitBtn');
+            submitBtn.innerHTML = '<i class="fas fa-rocket mr-2"></i> Publish Product Live';
+            submitBtn.classList.add('from-purple-600', 'to-indigo-600', 'hover:from-purple-700', 'hover:to-indigo-700');
+            submitBtn.classList.remove('from-blue-500', 'to-blue-700', 'hover:from-blue-600', 'hover:to-blue-800');
+            
+            document.getElementById('cancelEditBtn').classList.add('hidden');
+        };
 
         // Auth Check & Screen Toggle
         onAuthStateChanged(auth, (user) => {
@@ -259,8 +439,7 @@
                 loginScreen.classList.add('hidden');
                 dashboardScreen.classList.remove('hidden');
                 dashboardScreen.classList.add('flex');
-                // Jaise hi login ho, analytics fetch karo
-                fetchDashboardStats(); 
+                fetchDashboardData(); 
             } else {
                 loginScreen.classList.remove('hidden');
                 dashboardScreen.classList.add('hidden');
@@ -288,50 +467,54 @@
         });
 
         // Logout
-        document.getElementById('logoutBtn').addEventListener('click', () => {
-            signOut(auth);
-        });
+        document.getElementById('logoutBtn').addEventListener('click', () => signOut(auth));
 
-        // Product Upload Logic
+        // Product Upload & Update Logic
         document.getElementById('addProductForm').addEventListener('submit', async (e) => {
             e.preventDefault();
-            const btn = e.target.querySelector('button');
+            const btn = document.getElementById('submitBtn');
             const status = document.getElementById('statusMessage');
             
-            const originalBtnHtml = btn.innerHTML;
-            btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Publishing to Store...';
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Processing...';
             btn.disabled = true;
             btn.classList.add('opacity-80', 'cursor-not-allowed');
 
             const rawImageLinks = document.getElementById('prodImageLink').value;
             const imageArray = rawImageLinks.split(',').map(link => link.trim()).filter(link => link !== "");
 
-            try {
-                await addDoc(collection(db, "products"), {
-                    name: document.getElementById('prodName').value,
-                    price: Number(document.getElementById('prodPrice').value),
-                    category: document.getElementById('prodCategory').value,
-                    description: document.getElementById('prodDesc').value,
-                    fileLink: document.getElementById('prodFileLink').value,
-                    images: imageArray,
-                    dateAdded: new Date().toISOString()
-                });
+            const productData = {
+                name: document.getElementById('prodName').value,
+                price: Number(document.getElementById('prodPrice').value),
+                category: document.getElementById('prodCategory').value,
+                description: document.getElementById('prodDesc').value,
+                fileLink: document.getElementById('prodFileLink').value,
+                images: imageArray
+            };
 
-                status.innerHTML = "<div class='flex items-center justify-center'><i class='fas fa-check-circle text-xl mr-2'></i> Product Published Successfully!</div>";
+            try {
+                if (window.editingProductId) {
+                    await updateDoc(doc(db, "products", window.editingProductId), productData);
+                    status.innerHTML = "<div class='flex items-center justify-center'><i class='fas fa-check-circle text-xl mr-2'></i> Product Updated Successfully!</div>";
+                    window.cancelEdit();
+                } else {
+                    productData.dateAdded = new Date().toISOString();
+                    await addDoc(collection(db, "products"), productData);
+                    status.innerHTML = "<div class='flex items-center justify-center'><i class='fas fa-check-circle text-xl mr-2'></i> Product Published Successfully!</div>";
+                    e.target.reset(); 
+                }
+
                 status.className = "mt-6 text-center font-bold text-green-700 bg-green-50 p-4 rounded-lg block border border-green-200";
-                e.target.reset(); 
-                
-                // Naya product dalne ke baad Total Products count update karo
-                fetchDashboardStats();
+                fetchDashboardData();
 
             } catch (error) {
-                status.innerHTML = "<div class='flex items-center justify-center'><i class='fas fa-exclamation-triangle text-xl mr-2'></i> Error! Check connection.</div>";
+                console.error("Error saving product: ", error);
+                status.innerHTML = "<div class='flex items-center justify-center'><i class='fas fa-exclamation-triangle text-xl mr-2'></i> Error saving data. Check connection.</div>";
                 status.className = "mt-6 text-center font-bold text-red-700 bg-red-50 p-4 rounded-lg block border border-red-200";
             } finally {
-                btn.innerHTML = originalBtnHtml;
+                btn.innerHTML = window.editingProductId ? '<i class="fas fa-save mr-2"></i> Update Product' : '<i class="fas fa-rocket mr-2"></i> Publish Product Live';
                 btn.disabled = false;
                 btn.classList.remove('opacity-80', 'cursor-not-allowed');
-                setTimeout(() => { status.classList.add('hidden'); }, 5000);
+                setTimeout(() => { status.classList.add('hidden'); }, 4000);
             }
         });
     </script>
