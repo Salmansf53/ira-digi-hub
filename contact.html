@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - iRA Digi HUB</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-50 font-sans flex flex-col min-h-screen">
+    <!-- NAVBAR -->
+    <nav class="bg-[#0b0f19] text-white px-8 py-4 flex items-center justify-between border-b border-gray-800">
+        <a href="index.html" class="text-2xl font-bold cursor-pointer">
+            iRA<span class="text-purple-500">DIGI</span>HUB
+        </a>
+        <a href="index.html" class="hover:text-purple-400 transition text-sm font-medium"><i class="fas fa-arrow-left mr-2"></i>Back to Store</a>
+    </nav>
+
+    <!-- CONTENT -->
+    <main class="flex-grow max-w-4xl mx-auto px-6 py-16 w-full">
+        <div class="text-center mb-12">
+            <h1 class="text-4xl font-bold text-gray-900 mb-4">Contact Us</h1>
+            <p class="text-gray-500">Have a question about our products? We're here to help.</p>
+        </div>
+
+        <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-8 grid grid-cols-1 md:grid-cols-2 gap-12">
+            <div>
+                <h3 class="text-xl font-bold text-gray-900 mb-6">Get in Touch</h3>
+                <div class="space-y-6">
+                    <div class="flex items-start space-x-4">
+                        <div class="bg-purple-100 text-purple-600 w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 mt-1"><i class="fas fa-envelope"></i></div>
+                        <div>
+                            <h4 class="font-bold text-gray-800">Email Support</h4>
+                            <p class="text-sm text-gray-500 mb-1">Our team replies within 24 hours.</p>
+                            <a href="mailto:hello@iradigihub.com" class="text-purple-600 font-medium hover:underline">hello@iradigihub.com</a>
+                        </div>
+                    </div>
+                    <div class="flex items-start space-x-4">
+                        <div class="bg-purple-100 text-purple-600 w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 mt-1"><i class="fas fa-clock"></i></div>
+                        <div>
+                            <h4 class="font-bold text-gray-800">Business Hours</h4>
+                            <p class="text-sm text-gray-500">Monday - Saturday<br>10:00 AM - 6:00 PM (IST)</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <form onsubmit="event.preventDefault(); alert('Message Sent!');" class="space-y-4">
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-1">Your Name</label>
+                    <input type="text" required class="w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-purple-500 outline-none">
+                </div>
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-1">Email Address</label>
+                    <input type="email" required class="w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-purple-500 outline-none">
+                </div>
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-1">Message</label>
+                    <textarea rows="4" required class="w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-purple-500 outline-none"></textarea>
+                </div>
+                <button type="submit" class="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 rounded-lg transition">Send Message</button>
+            </form>
+        </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-[#0b0f19] text-center py-6 text-sm text-gray-500 mt-auto">
+        © 2026 iRA Digi HUB. All rights reserved.
+    </footer>
+</body>
+</html>
