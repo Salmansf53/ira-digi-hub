@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Download Product - iRA Digi HUB</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-50 font-sans flex flex-col min-h-screen">
+
+    <!-- Navbar -->
+    <nav class="bg-[#0b0f19] text-white px-8 py-4 flex items-center justify-center border-b border-gray-800 shadow-md">
+        <a href="index.html" class="text-2xl font-bold cursor-pointer">
+            iRA<span class="text-purple-500">DIGI</span>HUB
+        </a>
+    </nav>
+
+    <main class="flex-1 max-w-3xl mx-auto px-4 py-12 w-full">
+        
+        <!-- Success Message -->
+        <div class="text-center mb-10">
+            <div class="w-20 h-20 bg-green-100 text-green-500 rounded-full flex items-center justify-center text-4xl mx-auto mb-4 shadow-sm border-4 border-white">
+                <i class="fas fa-check"></i>
+            </div>
+            <h1 class="text-3xl font-extrabold text-gray-900 mb-2">Payment Successful!</h1>
+            <p class="text-gray-500">Thank you for your purchase. Your product is ready.</p>
+        </div>
+
+        <!-- Download Section -->
+        <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-8 mb-8 text-center relative overflow-hidden">
+            <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-purple-500 to-indigo-500"></div>
+            
+            <h2 id="productTitle" class="text-xl font-bold text-gray-800 mb-6">Loading Product...</h2>
+            
+            <a href="#" id="downloadBtn" target="_blank" class="inline-block bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white font-bold text-lg py-4 px-10 rounded-xl shadow-lg transition duration-300 transform hover:-translate-y-1 hidden">
+                <i class="fas fa-cloud-download-alt mr-2"></i> Download from Google Drive
+            </a>
+            <div id="loadingDownload" class="text-purple-600"><i class="fas fa-circle-notch fa-spin text-2xl"></i></div>
+        </div>
+
+        <!-- Review Section (For Verified Buyers Only) -->
+        <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-8">
+            <div class="text-center mb-6">
+                <h3 class="font-bold text-xl text-gray-900">How was your experience?</h3>
+                <p class="text-sm text-gray-500 mt-1">Your review helps us improve and helps others decide!</p>
+            </div>
+
+            <form id="submitReviewForm" class="space-y-5">
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-2">Your Name</label>
+                    <input type="text" id="revName" placeholder="e.g., Salman" required class="w-full border border-gray-300 rounded-lg p-3.5 focus:ring-2 focus:ring-purple-500 focus:outline-none bg-gray-50">
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-2">Rating</label>
+                    <select id="revRating" class="w-full border border-gray-300 rounded-lg p-3.5 focus:ring-2 focus:ring-purple-500 focus:outline-none bg-gray-50 text-yellow-500 font-bold">
+                        <option value="5">⭐⭐⭐⭐⭐ (Excellent)</option>
+                        <option value="4">⭐⭐⭐⭐ (Good)</option>
+                        <option value="3">⭐⭐⭐ (Average)</option>
+                        <option value="2">⭐⭐ (Poor)</option>
+                        <option value="1">⭐ (Terrible)</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-2">Write your review</label>
+                    <textarea id="revText" placeholder="What did you like about this product?" required rows="3" class="w-full border border-gray-300 rounded-lg p-3.5 focus:ring-2 focus:ring-purple-500 focus:outline-none bg-gray-50"></textarea>
+                </div>
+
+                <button type="submit" class="w-full bg-gray-900 hover:bg-black text-white font-bold py-4 rounded-xl shadow-md transition duration-300">
+                    <i class="fas fa-paper-plane mr-2"></i> Submit My Review
+                </button>
+            </form>
+
+            <div id="revStatus" class="hidden mt-4 p-4 bg-green-50 border border-green-200 text-green-700 rounded-lg text-center font-bold">
+                <i class="fas fa-check-circle mr-2"></i> Thank you! Your review has been posted.
+            </div>
+        </div>
+
+    </main>
+
+    <div class="bg-[#0b0f19] text-center py-6 text-sm text-gray-500 font-medium mt-auto w-full">
+        © 2026 iRA Digi HUB. All rights reserved.
+    </div>
+
+    <!-- FIREBASE SCRIPT -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
+        import { getFirestore, doc, getDoc, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyBdpekXgFaepzFN9Ecvvyw2jPh9FPikjYQ",
+            authDomain: "ira-digi-hub.firebaseapp.com",
+            databaseURL: "https://ira-digi-hub-default-rtdb.firebaseio.com",
+            projectId: "ira-digi-hub",
+            storageBucket: "ira-digi-hub.firebasestorage.app",
+            messagingSenderId: "501602413995",
+            appId: "1:501602413995:web:60ba782855226fd1a476ee"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        // Get Product ID from URL (e.g., download.html?id=XYZ123)
+        const urlParams = new URLSearchParams(window.location.search);
+        const productId = urlParams.get('id');
+
+        // Fetch Product Details for the Download Button
+        async function loadDownloadDetails() {
+            if (!productId) {
+                document.getElementById('productTitle').innerText = "Invalid Product Link!";
+                document.getElementById('loadingDownload').classList.add('hidden');
+                return;
+            }
+
+            try {
+                const docRef = doc(db, "products", productId);
+                const docSnap = await getDoc(docRef);
+
+                if (docSnap.exists()) {
+                    const product = docSnap.data();
+                    document.getElementById('productTitle').innerText = `Your File: ${product.name}`;
+                    
+                    const btn = document.getElementById('downloadBtn');
+                    btn.href = product.fileLink; // Set the Google Drive file link
+                    
+                    document.getElementById('loadingDownload').classList.add('hidden');
+                    btn.classList.remove('hidden');
+                } else {
+                    document.getElementById('productTitle').innerText = "Product Not Found!";
+                    document.getElementById('loadingDownload').classList.add('hidden');
+                }
+            } catch (error) {
+                console.error("Error fetching product:", error);
+            }
+        }
+
+        loadDownloadDetails();
+
+        // Handle Review Submission
+        document.getElementById('submitReviewForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            if (!productId) {
+                alert("Cannot submit review. Invalid product ID.");
+                return;
+            }
+
+            const btn = e.target.querySelector('button');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Submitting...';
+            btn.disabled = true;
+            btn.classList.add('opacity-70');
+
+            try {
+                // Save review to Firebase 'reviews' collection
+                await addDoc(collection(db, "reviews"), {
+                    productId: productId,
+                    name: document.getElementById('revName').value,
+                    rating: Number(document.getElementById('revRating').value),
+                    text: document.getElementById('revText').value,
+                    dateAdded: new Date().toISOString()
+                });
+
+                e.target.style.display = 'none'; // Hide form after submission
+                document.getElementById('revStatus').classList.remove('hidden'); // Show success message
+
+            } catch (error) {
+                console.error("Error adding review: ", error);
+                btn.innerHTML = '<i class="fas fa-exclamation-triangle mr-2"></i> Error!';
+            } finally {
+                btn.disabled = false;
+                btn.classList.remove('opacity-70');
+            }
+        });
+    </script>
+</body>
+</html>

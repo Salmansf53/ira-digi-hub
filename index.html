@@ -89,9 +89,33 @@
             </div>
             
             <div class="md:w-1/2 mt-12 md:mt-0 relative">
-                <div class="bg-gradient-to-tr from-purple-900/40 to-blue-900/40 w-full h-[400px] rounded-2xl border border-gray-700 flex flex-col items-center justify-center shadow-[0_0_80px_rgba(124,58,237,0.2)] overflow-hidden">
-                    <i class="fas fa-laptop-code text-6xl text-purple-400 mb-4 opacity-50"></i>
-                    <p class="text-gray-400 italic">Dashboard & Template Mockups Go Here</p>
+                <!-- SLIDE ANIMATION CONTAINER -->
+                <div class="w-full h-[350px] md:h-[450px] rounded-2xl overflow-hidden shadow-[0_0_80px_rgba(124,58,237,0.2)] border border-gray-800 relative group">
+                    <div class="absolute inset-0 bg-purple-900/10 group-hover:bg-transparent transition duration-500 z-20 pointer-events-none"></div>
+                    
+                    <!-- Sliding Track -->
+                    <div id="hero-slider" class="flex w-full h-full transition-transform duration-700 ease-in-out">
+                        <!-- Slide 1: Main ChatGPT Mockup -->
+                        <div class="w-full h-full flex-shrink-0">
+                            <img src="https://i.ibb.co/DPR4ZTNd/Chat-GPT-Image-Aug-19-2026-11-03-14-PM-1.png" alt="Premium Mockup" class="w-full h-full object-cover">
+                        </div>
+                        <!-- Slide 2: Excel Image -->
+                        <div class="w-full h-full flex-shrink-0">
+                            <img src="https://i.ibb.co/M5NsNH0n/Chat-GPT-Image-Aug-19-2026-11-50-19-PM-1.png" alt="Excel Templates" class="w-full h-full object-cover">
+                        </div>
+                        <!-- Slide 3: eBook Image -->
+                        <div class="w-full h-full flex-shrink-0">
+                            <img src="https://i.ibb.co/5hY6hYpH/Chat-GPT-Image-Aug-19-2026-11-53-48-PM-1.png" alt="eBooks" class="w-full h-full object-cover">
+                        </div>
+                        <!-- Slide 4: Canva Templates -->
+                        <div class="w-full h-full flex-shrink-0">
+                            <img src="https://i.ibb.co/P398y4r/Chat-GPT-Image-Aug-19-2026-11-59-50-PM-1.png" alt="Canva Templates" class="w-full h-full object-cover">
+                        </div>
+                        <!-- Slide 5: Business Planners -->
+                        <div class="w-full h-full flex-shrink-0">
+                            <img src="https://i.ibb.co/tMnz0LFt/Chat-GPT-Image-Aug-20-2026-12-01-20-AM-1.png" alt="Business Planners" class="w-full h-full object-cover">
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -300,6 +324,22 @@
             © 2026 iRA Digi HUB. All rights reserved.
         </div>
     </div>
+
+    <!-- ================= SLIDE ANIMATION SCRIPT ================= -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const slider = document.getElementById('hero-slider');
+            const totalSlides = slider.children.length;
+            let currentSlide = 0;
+
+            if(totalSlides > 0) {
+                setInterval(() => {
+                    currentSlide = (currentSlide + 1) % totalSlides;
+                    slider.style.transform = `translateX(-${currentSlide * 100}%)`;
+                }, 3500); // 3.5 seconds me slide hoga
+            }
+        });
+    </script>
 
     <!-- ================= FIREBASE DATABASE FETCH SCRIPT ================= -->
     <script type="module">

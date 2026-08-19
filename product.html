@@ -34,9 +34,9 @@
             
             <!-- Left: Image Slider -->
             <div class="md:w-1/2 p-6 bg-gray-50 flex flex-col">
-                <div class="w-full h-80 bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden mb-4 relative">
+                <div class="w-full h-80 bg-gray-200 rounded-xl shadow-sm border border-gray-200 overflow-hidden mb-4 relative flex items-center justify-center">
                     <span id="badge-category" class="absolute top-3 left-3 bg-[#0b0f19] text-white px-3 py-1 text-[10px] font-bold rounded uppercase tracking-wider z-10 shadow-lg">CAT</span>
-                    <img id="main-image" src="" class="w-full h-full object-cover transition duration-300">
+                    <img id="main-image" class="w-full h-full object-cover transition duration-300">
                 </div>
                 <!-- Thumbnails (Dynamically Populated) -->
                 <div id="thumbnail-container" class="flex space-x-3 overflow-x-auto py-2">
@@ -89,31 +89,13 @@
             </div>
         </div>
 
-        <!-- REVIEWS SECTION -->
+        <!-- REVIEWS SECTION (DYNAMIC) -->
         <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-8">
             <h2 class="text-xl font-bold text-gray-900 mb-6 border-b pb-4">Customer Reviews</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <!-- Static Review 1 -->
-                <div class="bg-gray-50 p-4 rounded-lg">
-                    <div class="flex items-center space-x-3 mb-2">
-                        <div class="w-8 h-8 bg-purple-200 text-purple-700 rounded-full flex items-center justify-center font-bold text-xs">R</div>
-                        <div>
-                            <div class="font-bold text-sm">Rahul Singh</div>
-                            <div class="text-yellow-400 text-[10px]"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
-                        </div>
-                    </div>
-                    <p class="text-sm text-gray-600 italic">"Highly recommended! The quality is top-notch and it saved me hours of work."</p>
-                </div>
-                <!-- Static Review 2 -->
-                <div class="bg-gray-50 p-4 rounded-lg">
-                    <div class="flex items-center space-x-3 mb-2">
-                        <div class="w-8 h-8 bg-blue-200 text-blue-700 rounded-full flex items-center justify-center font-bold text-xs">A</div>
-                        <div>
-                            <div class="font-bold text-sm">Amit Verma</div>
-                            <div class="text-yellow-400 text-[10px]"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
-                        </div>
-                    </div>
-                    <p class="text-sm text-gray-600 italic">"Instant delivery to Google Drive. Very easy and smooth checkout process."</p>
+            <div id="dynamic-reviews-container" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Loading State -->
+                <div class="col-span-full text-center py-6 text-gray-500 font-medium">
+                    <i class="fas fa-circle-notch fa-spin mr-2 text-purple-500"></i> Loading genuine customer reviews...
                 </div>
             </div>
         </div>
@@ -126,7 +108,8 @@
     <!-- FIREBASE SCRIPT -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
-        import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
+        // Added collection, query, where, getDocs for Reviews logic
+        import { getFirestore, doc, getDoc, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyBdpekXgFaepzFN9Ecvvyw2jPh9FPikjYQ",
@@ -144,6 +127,50 @@
         const urlParams = new URLSearchParams(window.location.search);
         const productId = urlParams.get('id');
 
+        // NEW FUNCTION: Fetch & Display Dynamic Reviews
+        async function fetchReviews(pId) {
+            const reviewsContainer = document.getElementById('dynamic-reviews-container');
+            try {
+                const q = query(collection(db, "reviews"), where("productId", "==", pId));
+                const querySnapshot = await getDocs(q);
+
+                if (querySnapshot.empty) {
+                    reviewsContainer.innerHTML = '<div class="col-span-full text-center text-gray-500 italic py-4">No reviews yet. Be the first to review after purchasing!</div>';
+                    return;
+                }
+
+                reviewsContainer.innerHTML = '';
+                
+                const reviewsList = [];
+                querySnapshot.forEach((doc) => reviewsList.push(doc.data()));
+                
+                // Sort by newest first
+                reviewsList.sort((a, b) => new Date(b.dateAdded) - new Date(a.dateAdded));
+
+                reviewsList.forEach((review) => {
+                    const initial = review.name ? review.name.charAt(0).toUpperCase() : 'U';
+                    const rating = review.rating || 5;
+                    const starsHtml = '<i class="fas fa-star"></i>'.repeat(rating) + '<i class="far fa-star text-gray-300"></i>'.repeat(5 - rating);
+
+                    reviewsContainer.innerHTML += `
+                        <div class="bg-gray-50 p-5 rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition">
+                            <div class="flex items-center space-x-3 mb-3">
+                                <div class="w-10 h-10 bg-gradient-to-br from-purple-400 to-indigo-500 text-white rounded-full flex items-center justify-center font-bold text-sm shadow-sm">${initial}</div>
+                                <div>
+                                    <div class="font-bold text-sm text-gray-800">${review.name} <span class="text-green-500 text-[10px] ml-1 font-medium bg-green-100 px-1.5 py-0.5 rounded-full"><i class="fas fa-check-circle"></i> Verified Buyer</span></div>
+                                    <div class="text-yellow-400 text-[11px] flex space-x-0.5 mt-1">${starsHtml}</div>
+                                </div>
+                            </div>
+                            <p class="text-sm text-gray-600 italic leading-relaxed">"${review.text}"</p>
+                        </div>
+                    `;
+                });
+            } catch (error) {
+                console.error("Error loading reviews:", error);
+                reviewsContainer.innerHTML = '<div class="col-span-full text-center text-red-400 text-sm">Could not load reviews at this time.</div>';
+            }
+        }
+
         async function fetchProductDetails() {
             if (!productId) return;
 
@@ -154,41 +181,73 @@
                 if (docSnap.exists()) {
                     const product = docSnap.data();
                     
-                    document.getElementById('bc-category').innerText = product.category;
-                    document.getElementById('bc-name').innerText = product.name;
-                    document.getElementById('badge-category').innerText = product.category;
-                    document.getElementById('detail-name').innerText = product.name;
-                    document.getElementById('detail-price').innerText = product.price;
-                    document.getElementById('detail-desc').innerText = product.description;
+                    document.getElementById('bc-category').innerText = product.category || 'Product';
+                    document.getElementById('bc-name').innerText = product.name || 'Details';
+                    document.getElementById('badge-category').innerText = product.category || 'Digital';
+                    document.getElementById('detail-name').innerText = product.name || 'Premium Digital Product';
+                    document.getElementById('detail-price').innerText = product.price || '99';
+                    document.getElementById('detail-desc').innerText = product.description || 'No description provided.';
                     
-                    // Setup Image Slider
                     const mainImg = document.getElementById('main-image');
                     const thumbContainer = document.getElementById('thumbnail-container');
+                    const defaultImgUrl = 'https://placehold.co/600x400/1e1e1e/white?text=Digital+Product';
                     
-                    if (product.images && product.images.length > 0) {
-                        mainImg.src = product.images[0];
+                    // Fallback logic for main image
+                    mainImg.onerror = function() {
+                        this.onerror = null; 
+                        this.src = defaultImgUrl;
+                    };
+
+                    let imageArray = [];
+                    if (product.images && Array.isArray(product.images) && product.images.length > 0) {
+                        imageArray = product.images;
+                    } else if (product.image && typeof product.image === 'string') {
+                        imageArray = [product.image];
+                    } else if (product.imageUrl && typeof product.imageUrl === 'string') {
+                        imageArray = [product.imageUrl];
+                    }
+
+                    if (imageArray.length > 0 && imageArray[0].trim() !== '') {
+                        mainImg.src = imageArray[0]; 
                         
-                        product.images.forEach((imgUrl) => {
-                            const thumb = document.createElement('img');
-                            thumb.src = imgUrl;
-                            thumb.className = "w-16 h-16 object-cover rounded-md cursor-pointer border-2 border-transparent hover:border-purple-500 transition opacity-70 hover:opacity-100";
-                            thumb.onclick = () => { mainImg.src = imgUrl; }; // Swap logic
-                            thumbContainer.appendChild(thumb);
+                        imageArray.forEach((imgUrl) => {
+                            if (imgUrl.trim() !== '') {
+                                const thumb = document.createElement('img');
+                                thumb.className = "w-16 h-16 object-cover rounded-md cursor-pointer border-2 border-transparent hover:border-purple-500 transition opacity-70 hover:opacity-100 bg-gray-200";
+                                
+                                thumb.onerror = function() { 
+                                    this.onerror = null; 
+                                    this.src = defaultImgUrl; 
+                                };
+                                thumb.src = imgUrl; 
+                                
+                                thumb.onclick = () => { 
+                                    mainImg.onerror = function() { 
+                                        this.onerror = null; 
+                                        this.src = defaultImgUrl; 
+                                    };
+                                    mainImg.src = imgUrl; 
+                                };
+                                thumbContainer.appendChild(thumb);
+                            }
                         });
                     } else {
-                        mainImg.src = 'https://placehold.co/600x400/1e1e1e/white?text=No+Image';
+                        mainImg.src = defaultImgUrl;
                     }
                     
-                    // Buy Now Button will redirect to checkout with ID
                     document.getElementById('buyNowBtn').onclick = () => {
                         window.location.href = `checkout.html?id=${productId}`;
                     };
 
                     document.getElementById('loading').classList.add('hidden');
                     document.getElementById('product-content').classList.remove('hidden');
+
+                    // LOAD REVIEWS AFTER PRODUCT DETAILS ARE LOADED
+                    fetchReviews(productId);
                 }
             } catch (error) {
                 console.error("Error fetching product:", error);
+                document.getElementById('loading').innerHTML = '<p class="text-red-500 font-bold">Error loading product details. Please try again.</p>';
             }
         }
 
