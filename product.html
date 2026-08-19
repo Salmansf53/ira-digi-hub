@@ -125,7 +125,6 @@
     <!-- FIREBASE SCRIPT -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
-        // Added collection, query, where, getDocs for Reviews logic
         import { getFirestore, doc, getDoc, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
 
         const firebaseConfig = {
@@ -144,7 +143,6 @@
         const urlParams = new URLSearchParams(window.location.search);
         const productId = urlParams.get('id');
 
-        // NEW FUNCTION: Fetch & Display Dynamic Reviews
         async function fetchReviews(pId) {
             const reviewsContainer = document.getElementById('dynamic-reviews-container');
             try {
@@ -161,7 +159,6 @@
                 const reviewsList = [];
                 querySnapshot.forEach((doc) => reviewsList.push(doc.data()));
                 
-                // Sort by newest first
                 reviewsList.sort((a, b) => new Date(b.dateAdded) - new Date(a.dateAdded));
 
                 reviewsList.forEach((review) => {
@@ -205,14 +202,12 @@
                     document.getElementById('detail-price').innerText = product.price || '99';
                     document.getElementById('detail-desc').innerText = product.description || 'No description provided.';
                     
-                    // Update Browser Tab Title Dynamic for SEO
                     document.getElementById('page-title').innerText = `${product.name} - iRA Digi HUB`;
 
                     const mainImg = document.getElementById('main-image');
                     const thumbContainer = document.getElementById('thumbnail-container');
                     const defaultImgUrl = 'https://placehold.co/600x400/1e1e1e/white?text=Digital+Product';
                     
-                    // Fallback logic for main image
                     mainImg.onerror = function() {
                         this.onerror = null; 
                         this.src = defaultImgUrl;
@@ -230,7 +225,6 @@
                     if (imageArray.length > 0 && imageArray[0].trim() !== '') {
                         mainImg.src = imageArray[0]; 
                         
-                        // Update OG image if available
                         document.querySelector('meta[property="og:image"]').setAttribute("content", imageArray[0]);
                         
                         imageArray.forEach((imgUrl) => {
@@ -258,31 +252,63 @@
                         mainImg.src = defaultImgUrl;
                     }
                     
-                    // Update OG title and description tags dynamically
                     document.querySelector('meta[property="og:title"]').setAttribute("content", `${product.name} - iRA Digi HUB`);
                     document.querySelector('meta[property="og:description"]').setAttribute("content", product.description || "Check out this premium digital product. Instant download & lifetime access!");
 
                     // ==========================================
-                    // NATIVE SHARE BUTTON LOGIC (Web Share API)
+                    // UPDATED SHARE BUTTON LOGIC (Image + Text)
                     // ==========================================
                     const shareBtn = document.getElementById('shareBtn');
                     shareBtn.onclick = async () => {
+                        const originalIcon = shareBtn.innerHTML;
+                        shareBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>'; // Loading icon show karega
+                        
                         const shareData = {
                             title: product.name,
-                            text: `Check out ${product.name} at iRA Digi HUB! Get instant access to premium digital templates.`,
+                            text: `Check out ${product.name} at iRA Digi HUB! Get instant access to premium digital templates.\n\n`,
                             url: window.location.href
                         };
                         
                         try {
-                            if (navigator.share) {
-                                await navigator.share(shareData); // Phone par native pop-up khulega
-                            } else {
-                                // PC par link copy ho jayega
-                                navigator.clipboard.writeText(window.location.href);
-                                alert("Link copied to clipboard! You can now paste and share it anywhere.");
+                            let sharedWithImage = false;
+                            
+                            // Check if phone supports sharing files and image is available
+                            if (navigator.canShare && mainImg.src && !mainImg.src.includes('placehold.co')) {
+                                try {
+                                    // Image ko background me download karke file banayega
+                                    const response = await fetch(mainImg.src);
+                                    const blob = await response.blob();
+                                    const file = new File([blob], 'product-image.jpg', { type: blob.type });
+                                    
+                                    const shareDataWithFile = {
+                                        ...shareData,
+                                        files: [file]
+                                    };
+
+                                    // Agar device file share support karta hai
+                                    if (navigator.canShare(shareDataWithFile)) {
+                                        await navigator.share(shareDataWithFile);
+                                        sharedWithImage = true;
+                                    }
+                                } catch (fetchErr) {
+                                    console.log("Could not fetch image for sharing, falling back to text link.");
+                                }
+                            }
+
+                            // Agar file attach nahi ho payi, toh normal Text + Link bhejo
+                            if (!sharedWithImage) {
+                                if (navigator.share) {
+                                    await navigator.share(shareData);
+                                } else {
+                                    // Laptops/PCs ke liye jahan direct share nahi hota
+                                    navigator.clipboard.writeText(window.location.href);
+                                    alert("Link copied to clipboard! You can now paste and share it anywhere.");
+                                }
                             }
                         } catch (err) {
                             console.log('Share window closed or failed.');
+                        } finally {
+                            shareBtn.innerHTML = originalIcon; // Wapas normal share icon set kar dega
                         }
                     };
                     // ==========================================
@@ -294,7 +320,6 @@
                     document.getElementById('loading').classList.add('hidden');
                     document.getElementById('product-content').classList.remove('hidden');
 
-                    // LOAD REVIEWS AFTER PRODUCT DETAILS ARE LOADED
                     fetchReviews(productId);
                 }
             } catch (error) {
