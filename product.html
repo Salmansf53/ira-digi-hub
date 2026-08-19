@@ -3,7 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Product Details - iRA Digi HUB</title>
+    
+    <!-- SEO & DYNAMIC OG TAGS (For WhatsApp/Facebook Sharing) -->
+    <title id="page-title">Product Details - iRA Digi HUB</title>
+    <meta name="description" content="Download premium digital products, templates, and tools to grow your business instantly.">
+    <meta property="og:title" content="iRA Digi HUB - Premium Digital Products">
+    <meta property="og:description" content="Check out this premium digital product. Instant download & lifetime access!">
+    <meta property="og:image" content="https://placehold.co/1200x630/0b0f19/white?text=iRA+Digi+HUB">
+    <meta property="og:type" content="website">
+
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
@@ -45,8 +53,17 @@
             </div>
             
             <!-- Right: Product Info & Buy Button -->
-            <div class="md:w-1/2 p-8 md:p-10 flex flex-col">
-                <h1 id="detail-name" class="text-3xl font-extrabold text-gray-900 mb-3 leading-tight">Product Name</h1>
+            <div class="md:w-1/2 p-8 md:p-10 flex flex-col relative">
+                
+                <!-- Title & Share Button Wrapper -->
+                <div class="flex justify-between items-start mb-3">
+                    <h1 id="detail-name" class="text-3xl font-extrabold text-gray-900 leading-tight pr-4">Product Name</h1>
+                    
+                    <!-- NEW SHARE BUTTON -->
+                    <button id="shareBtn" class="bg-purple-100 hover:bg-purple-200 text-purple-600 rounded-full w-10 h-10 flex items-center justify-center transition flex-shrink-0 shadow-sm" title="Share this product">
+                        <i class="fas fa-share-alt"></i>
+                    </button>
+                </div>
                 
                 <div class="flex items-center space-x-4 mb-6">
                     <div class="flex items-center text-yellow-400 text-sm">
@@ -188,6 +205,9 @@
                     document.getElementById('detail-price').innerText = product.price || '99';
                     document.getElementById('detail-desc').innerText = product.description || 'No description provided.';
                     
+                    // Update Browser Tab Title Dynamic for SEO
+                    document.getElementById('page-title').innerText = `${product.name} - iRA Digi HUB`;
+
                     const mainImg = document.getElementById('main-image');
                     const thumbContainer = document.getElementById('thumbnail-container');
                     const defaultImgUrl = 'https://placehold.co/600x400/1e1e1e/white?text=Digital+Product';
@@ -209,6 +229,9 @@
 
                     if (imageArray.length > 0 && imageArray[0].trim() !== '') {
                         mainImg.src = imageArray[0]; 
+                        
+                        // Update OG image if available
+                        document.querySelector('meta[property="og:image"]').setAttribute("content", imageArray[0]);
                         
                         imageArray.forEach((imgUrl) => {
                             if (imgUrl.trim() !== '') {
@@ -235,6 +258,35 @@
                         mainImg.src = defaultImgUrl;
                     }
                     
+                    // Update OG title and description tags dynamically
+                    document.querySelector('meta[property="og:title"]').setAttribute("content", `${product.name} - iRA Digi HUB`);
+                    document.querySelector('meta[property="og:description"]').setAttribute("content", product.description || "Check out this premium digital product. Instant download & lifetime access!");
+
+                    // ==========================================
+                    // NATIVE SHARE BUTTON LOGIC (Web Share API)
+                    // ==========================================
+                    const shareBtn = document.getElementById('shareBtn');
+                    shareBtn.onclick = async () => {
+                        const shareData = {
+                            title: product.name,
+                            text: `Check out ${product.name} at iRA Digi HUB! Get instant access to premium digital templates.`,
+                            url: window.location.href
+                        };
+                        
+                        try {
+                            if (navigator.share) {
+                                await navigator.share(shareData); // Phone par native pop-up khulega
+                            } else {
+                                // PC par link copy ho jayega
+                                navigator.clipboard.writeText(window.location.href);
+                                alert("Link copied to clipboard! You can now paste and share it anywhere.");
+                            }
+                        } catch (err) {
+                            console.log('Share window closed or failed.');
+                        }
+                    };
+                    // ==========================================
+
                     document.getElementById('buyNowBtn').onclick = () => {
                         window.location.href = `checkout.html?id=${productId}`;
                     };
