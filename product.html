@@ -15,7 +15,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
-<body class="bg-gray-50 font-sans flex flex-col min-h-screen">
+<body class="bg-gray-50 font-sans flex flex-col min-h-screen relative">
 
     <nav class="bg-[#0b0f19] text-white px-8 py-4 flex items-center justify-between border-b border-gray-800 sticky top-0 z-50">
         <a href="index.html" class="text-2xl font-bold cursor-pointer">
@@ -23,6 +23,12 @@
         </a>
         <div class="flex items-center space-x-6 text-sm font-medium">
             <a href="store.html" class="hover:text-purple-400 transition">All Products</a>
+            
+            <!-- NEW: CART ICON -->
+            <a href="cart.html" class="relative hover:text-purple-400 transition cursor-pointer">
+                <i class="fas fa-shopping-cart text-xl"></i>
+                <span id="cartCount" class="absolute -top-2 -right-2 bg-purple-600 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full border-2 border-[#0b0f19]">0</span>
+            </a>
         </div>
     </nav>
 
@@ -59,7 +65,7 @@
                 <div class="flex justify-between items-start mb-3">
                     <h1 id="detail-name" class="text-3xl font-extrabold text-gray-900 leading-tight pr-4">Product Name</h1>
                     
-                    <!-- NEW SHARE BUTTON -->
+                    <!-- SHARE BUTTON -->
                     <button id="shareBtn" class="bg-purple-100 hover:bg-purple-200 text-purple-600 rounded-full w-10 h-10 flex items-center justify-center transition flex-shrink-0 shadow-sm" title="Share this product">
                         <i class="fas fa-share-alt"></i>
                     </button>
@@ -99,10 +105,123 @@
                     </div>
                 </div>
 
-                <!-- BUY NOW BUTTON (Navigates to checkout page later) -->
-                <button id="buyNowBtn" class="w-full bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white font-bold text-lg py-4 rounded-xl shadow-xl transition duration-300 flex items-center justify-center transform hover:-translate-y-1">
-                    <i class="fas fa-shopping-cart mr-2"></i> Buy Now - Secure Checkout
-                </button>
+                <!-- NEW: ADD TO CART & BUY NOW BUTTONS -->
+                <div class="flex flex-col sm:flex-row gap-4">
+                    <button id="addToCartBtn" class="w-full sm:w-1/2 bg-purple-50 hover:bg-purple-100 text-purple-700 border border-purple-200 font-bold text-lg py-4 rounded-xl shadow-sm transition duration-300 flex items-center justify-center transform hover:-translate-y-1">
+                        <i class="fas fa-cart-plus mr-2"></i> Add to Cart
+                    </button>
+                    <button id="buyNowBtn" class="w-full sm:w-1/2 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white font-bold text-lg py-4 rounded-xl shadow-xl transition duration-300 flex items-center justify-center transform hover:-translate-y-1">
+                        <i class="fas fa-bolt mr-2"></i> Buy Now
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- MASTER FAQ SECTION (Accordion) -->
+        <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-8 mb-12">
+            <h2 class="text-2xl font-bold text-gray-900 mb-6 border-b pb-4">Frequently Asked Questions</h2>
+            <div class="space-y-4">
+                
+                <details class="group border border-gray-100 rounded-lg bg-gray-50 [&_summary::-webkit-details-marker]:hidden">
+                    <summary class="flex justify-between items-center font-bold cursor-pointer list-none text-gray-800 p-4">
+                        <span>1. How will I receive the files?</span>
+                        <span class="transition group-open:rotate-180"><i class="fas fa-chevron-down text-purple-600"></i></span>
+                    </summary>
+                    <div class="text-gray-600 text-sm p-4 pt-0 leading-relaxed">
+                        Instantly! You will be redirected to the download page immediately after successful payment, and a secure backup link will also be sent to your email address automatically.
+                    </div>
+                </details>
+
+                <details class="group border border-gray-100 rounded-lg bg-gray-50 [&_summary::-webkit-details-marker]:hidden">
+                    <summary class="flex justify-between items-center font-bold cursor-pointer list-none text-gray-800 p-4">
+                        <span>2. Is it a one-time payment?</span>
+                        <span class="transition group-open:rotate-180"><i class="fas fa-chevron-down text-purple-600"></i></span>
+                    </summary>
+                    <div class="text-gray-600 text-sm p-4 pt-0 leading-relaxed">
+                        Yes, absolutely! It is a 100% one-time payment. There are no hidden fees, no extra charges, and no monthly subscriptions. You pay once and get lifetime access.
+                    </div>
+                </details>
+
+                <details class="group border border-gray-100 rounded-lg bg-gray-50 [&_summary::-webkit-details-marker]:hidden">
+                    <summary class="flex justify-between items-center font-bold cursor-pointer list-none text-gray-800 p-4">
+                        <span>3. Do I need any special software to use this?</span>
+                        <span class="transition group-open:rotate-180"><i class="fas fa-chevron-down text-purple-600"></i></span>
+                    </summary>
+                    <div class="text-gray-600 text-sm p-4 pt-0 leading-relaxed">
+                        It depends on the product category. Canva templates only require a free Canva account. Excel or Google Sheets templates require MS Excel or a free Google account. Everything is extremely beginner-friendly.
+                    </div>
+                </details>
+
+                <details class="group border border-gray-100 rounded-lg bg-gray-50 [&_summary::-webkit-details-marker]:hidden">
+                    <summary class="flex justify-between items-center font-bold cursor-pointer list-none text-gray-800 p-4">
+                        <span>4. What is your refund policy?</span>
+                        <span class="transition group-open:rotate-180"><i class="fas fa-chevron-down text-purple-600"></i></span>
+                    </summary>
+                    <div class="text-gray-600 text-sm p-4 pt-0 leading-relaxed">
+                        Since our products are digital downloads and you get instant access, all sales are final and non-refundable. However, if you face any technical issues with the file, our support team is available 24/7 via WhatsApp to help you resolve it instantly.
+                    </div>
+                </details>
+
+                <details class="group border border-gray-100 rounded-lg bg-gray-50 [&_summary::-webkit-details-marker]:hidden">
+                    <summary class="flex justify-between items-center font-bold cursor-pointer list-none text-gray-800 p-4">
+                        <span>5. Can I use these templates for commercial purposes / client work?</span>
+                        <span class="transition group-open:rotate-180"><i class="fas fa-chevron-down text-purple-600"></i></span>
+                    </summary>
+                    <div class="text-gray-600 text-sm p-4 pt-0 leading-relaxed">
+                        Yes! You can use these templates for your own business or your clients' projects. However, you are strictly not allowed to resell, share, or redistribute the original raw template files as your own product.
+                    </div>
+                </details>
+
+                <details class="group border border-gray-100 rounded-lg bg-gray-50 [&_summary::-webkit-details-marker]:hidden">
+                    <summary class="flex justify-between items-center font-bold cursor-pointer list-none text-gray-800 p-4">
+                        <span>6. What if I accidentally delete or lose my downloaded files?</span>
+                        <span class="transition group-open:rotate-180"><i class="fas fa-chevron-down text-purple-600"></i></span>
+                    </summary>
+                    <div class="text-gray-600 text-sm p-4 pt-0 leading-relaxed">
+                        Don't panic! You have lifetime access. You can always re-download your files anytime in the future using the secure backup link sent to your email address at the time of your purchase.
+                    </div>
+                </details>
+
+                <details class="group border border-gray-100 rounded-lg bg-gray-50 [&_summary::-webkit-details-marker]:hidden">
+                    <summary class="flex justify-between items-center font-bold cursor-pointer list-none text-gray-800 p-4">
+                        <span>7. Is my payment secure?</span>
+                        <span class="transition group-open:rotate-180"><i class="fas fa-chevron-down text-purple-600"></i></span>
+                    </summary>
+                    <div class="text-gray-600 text-sm p-4 pt-0 leading-relaxed">
+                        100% Yes. We use industry-leading secure payment gateways that utilize end-to-end 256-bit encryption. We do not store your credit card, debit card, or bank details on our servers.
+                    </div>
+                </details>
+
+                <details class="group border border-gray-100 rounded-lg bg-gray-50 [&_summary::-webkit-details-marker]:hidden">
+                    <summary class="flex justify-between items-center font-bold cursor-pointer list-none text-gray-800 p-4">
+                        <span>8. I am a beginner, are these templates easy to edit?</span>
+                        <span class="transition group-open:rotate-180"><i class="fas fa-chevron-down text-purple-600"></i></span>
+                    </summary>
+                    <div class="text-gray-600 text-sm p-4 pt-0 leading-relaxed">
+                        Yes, they are extremely beginner-friendly! Most of our templates are designed to be "plug and play." You just need basic knowledge of typing and dragging elements to start using them efficiently.
+                    </div>
+                </details>
+
+                <details class="group border border-gray-100 rounded-lg bg-gray-50 [&_summary::-webkit-details-marker]:hidden">
+                    <summary class="flex justify-between items-center font-bold cursor-pointer list-none text-gray-800 p-4">
+                        <span>9. Can I access and edit the files on my mobile phone?</span>
+                        <span class="transition group-open:rotate-180"><i class="fas fa-chevron-down text-purple-600"></i></span>
+                    </summary>
+                    <div class="text-gray-600 text-sm p-4 pt-0 leading-relaxed">
+                        Yes, you can easily download and view the files on your mobile device. However, for serious editing of Excel trackers or complex Canva templates, we highly recommend using a laptop or desktop computer for the best experience.
+                    </div>
+                </details>
+
+                <details class="group border border-gray-100 rounded-lg bg-gray-50 [&_summary::-webkit-details-marker]:hidden">
+                    <summary class="flex justify-between items-center font-bold cursor-pointer list-none text-gray-800 p-4">
+                        <span>10. What if I don't receive the email after payment?</span>
+                        <span class="transition group-open:rotate-180"><i class="fas fa-chevron-down text-purple-600"></i></span>
+                    </summary>
+                    <div class="text-gray-600 text-sm p-4 pt-0 leading-relaxed">
+                        Sometimes automated emails can land in the Spam or Promotions folder. Please check there first. If you still can't find it, just click the WhatsApp chat button on this page, share your payment screenshot, and we will manually send you the files within minutes!
+                    </div>
+                </details>
+
             </div>
         </div>
 
@@ -116,16 +235,33 @@
                 </div>
             </div>
         </div>
+
+        <!-- RELATED PRODUCTS SECTION -->
+        <div class="mt-16 border-t border-gray-200 pt-10">
+            <h2 class="text-2xl font-bold text-gray-900 mb-6">You May Also Like</h2>
+            <div id="related-products-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Loading State -->
+                <div class="col-span-full text-center py-6 text-gray-500 font-medium">
+                    <i class="fas fa-circle-notch fa-spin mr-2 text-purple-500"></i> Loading related products...
+                </div>
+            </div>
+        </div>
+
     </main>
 
     <div class="bg-[#0b0f19] text-center py-6 text-sm text-gray-500 font-medium mt-12 w-full mt-auto">
         © 2026 iRA Digi HUB. All rights reserved.
     </div>
 
-    <!-- FIREBASE SCRIPT -->
+    <!-- FLOATING WHATSAPP BUTTON -->
+    <a href="https://wa.me/910000000000?text=Hello%20iRA%20Digi%20HUB!%20I%20need%20some%20help%20with%20your%20digital%20products." target="_blank" class="fixed bottom-6 right-6 bg-[#25D366] text-white w-14 h-14 rounded-full flex items-center justify-center text-3xl shadow-lg hover:shadow-2xl hover:scale-110 transition-all duration-300 z-50">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <!-- FIREBASE & CART SCRIPT -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
-        import { getFirestore, doc, getDoc, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
+        import { getFirestore, doc, getDoc, collection, query, where, getDocs, orderBy, limit } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyBdpekXgFaepzFN9Ecvvyw2jPh9FPikjYQ",
@@ -142,6 +278,13 @@
 
         const urlParams = new URLSearchParams(window.location.search);
         const productId = urlParams.get('id');
+
+        // NEW: CART COUNT LOGIC
+        function updateCartCount() {
+            let cart = JSON.parse(localStorage.getItem('ira_cart')) || [];
+            document.getElementById('cartCount').innerText = cart.length;
+        }
+        updateCartCount(); // Run on page load
 
         async function fetchReviews(pId) {
             const reviewsContainer = document.getElementById('dynamic-reviews-container');
@@ -182,6 +325,65 @@
             } catch (error) {
                 console.error("Error loading reviews:", error);
                 reviewsContainer.innerHTML = '<div class="col-span-full text-center text-red-400 text-sm">Could not load reviews at this time.</div>';
+            }
+        }
+
+        async function fetchRelatedProducts(currentProductId) {
+            const container = document.getElementById('related-products-container');
+            try {
+                const q = query(collection(db, "products"), orderBy("dateAdded", "desc"), limit(5));
+                const querySnapshot = await getDocs(q);
+
+                if (querySnapshot.empty) {
+                    container.innerHTML = '<div class="col-span-full text-gray-500 italic">No related products found.</div>';
+                    return;
+                }
+
+                container.innerHTML = '';
+                let count = 0;
+
+                querySnapshot.forEach((doc) => {
+                    if (doc.id === currentProductId) return;
+                    if (count >= 4) return;
+
+                    const product = doc.data();
+                    
+                    let mainImage = 'https://placehold.co/600x400/1e1e1e/white?text=Digital+Product';
+                    if (product.images && Array.isArray(product.images) && product.images.length > 0 && product.images[0].trim() !== '') {
+                        mainImage = product.images[0];
+                    } else if (product.image && typeof product.image === 'string' && product.image.trim() !== '') {
+                        mainImage = product.image;
+                    } else if (product.imageUrl && typeof product.imageUrl === 'string' && product.imageUrl.trim() !== '') {
+                        mainImage = product.imageUrl;
+                    }
+
+                    const productHTML = `
+                        <a href="product.html?id=${doc.id}" class="bg-white rounded-xl border border-gray-100 overflow-hidden hover:shadow-xl transition duration-300 flex flex-col h-full group cursor-pointer block">
+                            <div class="h-40 relative overflow-hidden bg-gray-100">
+                                <span class="absolute top-2 left-2 bg-black/70 text-white px-2 py-1 text-[9px] font-bold rounded z-10 uppercase tracking-wider">${product.category || 'Product'}</span>
+                                <img src="${mainImage}" alt="${product.name}" onerror="this.onerror=null; this.src='https://placehold.co/600x400/1e1e1e/white?text=Digital+Product';" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                            </div>
+                            <div class="p-4 flex flex-col flex-grow">
+                                <h3 class="font-bold text-gray-800 text-sm mb-2 leading-tight line-clamp-2" title="${product.name}">${product.name}</h3>
+                                <div class="flex items-center justify-between border-t border-gray-50 pt-3 mt-auto">
+                                    <span class="text-purple-600 font-extrabold">₹${product.price || '99'}</span>
+                                    <span class="text-[10px] font-bold text-white bg-[#0b0f19] group-hover:bg-purple-600 px-3 py-1.5 rounded transition shadow flex items-center">
+                                        View <i class="fas fa-arrow-right ml-1"></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </a>
+                    `;
+                    container.innerHTML += productHTML;
+                    count++;
+                });
+
+                if (count === 0) {
+                    container.innerHTML = '<div class="col-span-full text-gray-500 italic text-sm">More products coming soon!</div>';
+                }
+            } catch (error) {
+                console.error("Error fetching related products:", error);
+                container.innerHTML = '<div class="col-span-full text-red-500 text-sm">Could not load related products.</div>';
             }
         }
 
@@ -256,14 +458,13 @@
                     document.querySelector('meta[property="og:description"]').setAttribute("content", product.description || "Check out this premium digital product. Instant download & lifetime access!");
 
                     // ==========================================
-                    // UPDATED SHARE LOGIC (Caption Hack for WhatsApp)
+                    // SHARE LOGIC
                     // ==========================================
                     const shareBtn = document.getElementById('shareBtn');
                     shareBtn.onclick = async () => {
                         const originalIcon = shareBtn.innerHTML;
                         shareBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>'; 
                         
-                        // TRICK: Link ko text ke andar add kiya, alag se "url" pass nahi karenge.
                         const captionText = `Check out ${product.name} at iRA Digi HUB! Get instant access to premium digital templates.\n\n${window.location.href}`;
                         
                         try {
@@ -275,7 +476,6 @@
                                     const blob = await response.blob();
                                     const file = new File([blob], 'product-image.jpg', { type: blob.type });
                                     
-                                    // Yahan "url: window.location.href" hata diya taaki WhatsApp isko image ka caption samjhe!
                                     const shareDataWithFile = {
                                         title: product.name,
                                         text: captionText,
@@ -311,6 +511,45 @@
                     };
                     // ==========================================
 
+                    // ==========================================
+                    // NEW: ADD TO CART LOGIC
+                    // ==========================================
+                    document.getElementById('addToCartBtn').onclick = () => {
+                        let cart = JSON.parse(localStorage.getItem('ira_cart')) || [];
+                        
+                        // Check if product is already in cart
+                        const exists = cart.find(item => item.id === productId);
+                        
+                        if (!exists) {
+                            cart.push({
+                                id: productId,
+                                name: product.name,
+                                price: product.price,
+                                image: mainImg.src
+                            });
+                            
+                            localStorage.setItem('ira_cart', JSON.stringify(cart));
+                            updateCartCount(); // Update the navbar badge
+                            
+                            // Success Animation on Button
+                            const btn = document.getElementById('addToCartBtn');
+                            btn.innerHTML = '<i class="fas fa-check mr-2"></i> Added to Cart!';
+                            btn.classList.replace('text-purple-700', 'text-green-600');
+                            btn.classList.replace('bg-purple-50', 'bg-green-50');
+                            btn.classList.replace('border-purple-200', 'border-green-300');
+                            
+                            setTimeout(() => {
+                                btn.innerHTML = '<i class="fas fa-cart-plus mr-2"></i> Add to Cart';
+                                btn.classList.replace('text-green-600', 'text-purple-700');
+                                btn.classList.replace('bg-green-50', 'bg-purple-50');
+                                btn.classList.replace('border-green-300', 'border-purple-200');
+                            }, 2000);
+                        } else {
+                            alert("This product is already in your cart!");
+                        }
+                    };
+                    // ==========================================
+
                     document.getElementById('buyNowBtn').onclick = () => {
                         window.location.href = `checkout.html?id=${productId}`;
                     };
@@ -319,6 +558,7 @@
                     document.getElementById('product-content').classList.remove('hidden');
 
                     fetchReviews(productId);
+                    fetchRelatedProducts(productId);
                 }
             } catch (error) {
                 console.error("Error fetching product:", error);

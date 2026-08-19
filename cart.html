@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Cart - iRA Digi HUB</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-50 font-sans flex flex-col min-h-screen">
+
+    <nav class="bg-[#0b0f19] text-white px-8 py-4 flex items-center justify-between border-b border-gray-800 sticky top-0 z-50">
+        <a href="index.html" class="text-2xl font-bold cursor-pointer">
+            iRA<span class="text-purple-500">DIGI</span>HUB
+        </a>
+        <div class="flex items-center space-x-6 text-sm font-medium">
+            <a href="store.html" class="hover:text-purple-400 transition">Store</a>
+        </div>
+    </nav>
+
+    <main class="flex-1 max-w-6xl mx-auto px-4 py-12 w-full">
+        <h1 class="text-3xl font-extrabold text-gray-900 mb-8">Shopping Cart</h1>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <!-- Left: Cart Items -->
+            <div class="md:col-span-2">
+                <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+                    <div id="cartItemsContainer" class="space-y-6">
+                        <!-- Items will be injected here via JS -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right: Order Summary -->
+            <div class="md:col-span-1">
+                <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 sticky top-24">
+                    <h2 class="text-lg font-bold text-gray-900 mb-4 border-b pb-3">Cart Summary</h2>
+                    
+                    <div class="flex justify-between items-center text-gray-600 mb-4 text-sm">
+                        <span>Total Items</span>
+                        <span id="summaryItemCount" class="font-bold">0</span>
+                    </div>
+
+                    <div class="flex justify-between items-center text-xl font-black text-gray-900 mb-6 border-t pt-4">
+                        <span>Grand Total</span>
+                        <span class="text-purple-600">₹<span id="summaryTotal">0</span></span>
+                    </div>
+
+                    <button id="checkoutBtn" class="w-full bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white font-bold text-lg py-4 rounded-xl shadow-xl transition duration-300 flex items-center justify-center">
+                        Proceed to Checkout <i class="fas fa-arrow-right ml-2"></i>
+                    </button>
+                    
+                    <div class="mt-4 text-center">
+                        <a href="store.html" class="text-sm text-purple-600 font-medium hover:underline">Continue Shopping</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div class="bg-[#0b0f19] text-center py-6 text-sm text-gray-500 mt-auto w-full">
+        © 2026 iRA Digi HUB. All rights reserved.
+    </div>
+
+    <script>
+        function renderCart() {
+            let cart = JSON.parse(localStorage.getItem('ira_cart')) || [];
+            const container = document.getElementById('cartItemsContainer');
+            const itemCount = document.getElementById('summaryItemCount');
+            const summaryTotal = document.getElementById('summaryTotal');
+            const checkoutBtn = document.getElementById('checkoutBtn');
+
+            if (cart.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center py-10">
+                        <div class="text-gray-300 text-6xl mb-4"><i class="fas fa-shopping-basket"></i></div>
+                        <h2 class="text-xl font-bold text-gray-700">Your cart is empty!</h2>
+                        <p class="text-gray-500 mt-2">Looks like you haven't added any digital products yet.</p>
+                        <a href="store.html" class="inline-block mt-6 bg-purple-100 text-purple-700 font-bold py-2 px-6 rounded-lg hover:bg-purple-200 transition">Browse Store</a>
+                    </div>
+                `;
+                itemCount.innerText = "0";
+                summaryTotal.innerText = "0";
+                checkoutBtn.disabled = true;
+                checkoutBtn.classList.add('opacity-50', 'cursor-not-allowed');
+                return;
+            }
+
+            checkoutBtn.disabled = false;
+            checkoutBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+            
+            container.innerHTML = '';
+            let total = 0;
+
+            cart.forEach((item, index) => {
+                total += Number(item.price);
+                container.innerHTML += `
+                    <div class="flex items-center space-x-4 border-b border-gray-50 pb-6 last:border-0 last:pb-0">
+                        <div class="w-24 h-24 bg-gray-100 rounded-lg overflow-hidden flex-shrink-0">
+                            <img src="${item.image}" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/600x400';">
+                        </div>
+                        <div class="flex-grow">
+                            <h3 class="font-bold text-gray-800 text-sm md:text-base line-clamp-2">${item.name}</h3>
+                            <div class="text-purple-600 font-extrabold mt-1">₹${item.price}</div>
+                        </div>
+                        <button onclick="removeFromCart(${index})" class="bg-red-50 text-red-500 hover:bg-red-100 p-3 rounded-lg transition" title="Remove Item">
+                            <i class="fas fa-trash-alt"></i>
+                        </button>
+                    </div>
+                `;
+            });
+
+            itemCount.innerText = cart.length;
+            summaryTotal.innerText = total;
+        }
+
+        window.removeFromCart = function(index) {
+            let cart = JSON.parse(localStorage.getItem('ira_cart')) || [];
+            cart.splice(index, 1);
+            localStorage.setItem('ira_cart', JSON.stringify(cart));
+            renderCart();
+        }
+
+        document.getElementById('checkoutBtn').onclick = () => {
+            // Redirect to checkout with a special cart parameter
+            window.location.href = "checkout.html?cart=true";
+        }
+
+        // Initialize on load
+        renderCart();
+    </script>
+</body>
+</html>
