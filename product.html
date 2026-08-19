@@ -256,59 +256,57 @@
                     document.querySelector('meta[property="og:description"]').setAttribute("content", product.description || "Check out this premium digital product. Instant download & lifetime access!");
 
                     // ==========================================
-                    // UPDATED SHARE BUTTON LOGIC (Image + Text)
+                    // UPDATED SHARE LOGIC (Caption Hack for WhatsApp)
                     // ==========================================
                     const shareBtn = document.getElementById('shareBtn');
                     shareBtn.onclick = async () => {
                         const originalIcon = shareBtn.innerHTML;
-                        shareBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>'; // Loading icon show karega
+                        shareBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>'; 
                         
-                        const shareData = {
-                            title: product.name,
-                            text: `Check out ${product.name} at iRA Digi HUB! Get instant access to premium digital templates.\n\n`,
-                            url: window.location.href
-                        };
+                        // TRICK: Link ko text ke andar add kiya, alag se "url" pass nahi karenge.
+                        const captionText = `Check out ${product.name} at iRA Digi HUB! Get instant access to premium digital templates.\n\n${window.location.href}`;
                         
                         try {
                             let sharedWithImage = false;
                             
-                            // Check if phone supports sharing files and image is available
                             if (navigator.canShare && mainImg.src && !mainImg.src.includes('placehold.co')) {
                                 try {
-                                    // Image ko background me download karke file banayega
                                     const response = await fetch(mainImg.src);
                                     const blob = await response.blob();
                                     const file = new File([blob], 'product-image.jpg', { type: blob.type });
                                     
+                                    // Yahan "url: window.location.href" hata diya taaki WhatsApp isko image ka caption samjhe!
                                     const shareDataWithFile = {
-                                        ...shareData,
+                                        title: product.name,
+                                        text: captionText,
                                         files: [file]
                                     };
 
-                                    // Agar device file share support karta hai
                                     if (navigator.canShare(shareDataWithFile)) {
                                         await navigator.share(shareDataWithFile);
                                         sharedWithImage = true;
                                     }
                                 } catch (fetchErr) {
-                                    console.log("Could not fetch image for sharing, falling back to text link.");
+                                    console.log("Could not fetch image for sharing.");
                                 }
                             }
 
-                            // Agar file attach nahi ho payi, toh normal Text + Link bhejo
                             if (!sharedWithImage) {
                                 if (navigator.share) {
-                                    await navigator.share(shareData);
+                                    await navigator.share({
+                                        title: product.name,
+                                        text: `Check out ${product.name} at iRA Digi HUB! Get instant access to premium digital templates.`,
+                                        url: window.location.href
+                                    });
                                 } else {
-                                    // Laptops/PCs ke liye jahan direct share nahi hota
                                     navigator.clipboard.writeText(window.location.href);
-                                    alert("Link copied to clipboard! You can now paste and share it anywhere.");
+                                    alert("Link copied to clipboard!");
                                 }
                             }
                         } catch (err) {
                             console.log('Share window closed or failed.');
                         } finally {
-                            shareBtn.innerHTML = originalIcon; // Wapas normal share icon set kar dega
+                            shareBtn.innerHTML = originalIcon; 
                         }
                     };
                     // ==========================================
