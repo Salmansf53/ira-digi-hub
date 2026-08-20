@@ -73,8 +73,10 @@
                     
                     <div class="flex items-center space-x-4 mb-6">
                         <!-- Cleaned Image/Icon Box -->
-                        <div id="summary-media-box" class="w-16 h-16 bg-gray-100 rounded-lg overflow-hidden flex-shrink-0 flex items-center justify-center border border-gray-200">
-                            <!-- Injected dynamically -->
+                        <div class="w-16 h-16 bg-gray-100 rounded-lg overflow-hidden flex-shrink-0 flex items-center justify-center border border-gray-200">
+                            <!-- Toggle between Product Image and Cart Icon depending on Checkout type -->
+                            <img id="summary-img" src="" class="w-full h-full object-cover hidden">
+                            <i id="summary-icon" class="fas fa-shopping-bag text-3xl text-gray-400 hidden"></i>
                         </div>
                         <div class="flex-grow">
                             <h3 id="summary-name" class="font-bold text-gray-800 text-sm line-clamp-2">Loading...</h3>
@@ -168,8 +170,6 @@
             }
 
             try {
-                const mediaBox = document.getElementById('summary-media-box');
-
                 if (singleProductId) {
                     const docRef = doc(db, "products", singleProductId);
                     const docSnap = await getDoc(docRef);
@@ -188,7 +188,15 @@
                         document.getElementById('summary-cat').innerText = data.category || 'Digital';
                         
                         const mainImage = (data.images && data.images.length > 0) ? data.images[0] : (data.image || data.imageUrl || 'https://placehold.co/600x400');
-                        mediaBox.innerHTML = `<img src="${mainImage}" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/600x400';">`;
+                        
+                        // FIX: Explicitly Show Image, Hide Icon
+                        const imgElement = document.getElementById('summary-img');
+                        const iconElement = document.getElementById('summary-icon');
+                        
+                        imgElement.src = mainImage;
+                        imgElement.classList.remove('hidden');
+                        iconElement.classList.add('hidden');
+                        
                     } else {
                         throw new Error("Product Not Found");
                     }
@@ -200,24 +208,58 @@
                         return;
                     }
 
-                    for(let item of cart) {
-                        const docRef = doc(db, "products", item.id);
-                        const docSnap = await getDoc(docRef);
-                        if(docSnap.exists()){
-                            const data = docSnap.data();
-                            purchasedItems.push({
-                                id: item.id,
-                                name: data.name,
-                                price: Number(data.price),
-                                fileLink: data.fileLink
-                            });
-                            totalAmount += Number(data.price);
+                    // For cart checkout, we might have multiple items.
+                    // If it's just 1 item in the cart, let's show its image.
+                    if (cart.length === 1) {
+                         const docRef = doc(db, "products", cart[0].id);
+                         const docSnap = await getDoc(docRef);
+                         if(docSnap.exists()){
+                             const data = docSnap.data();
+                             purchasedItems.push({
+                                 id: cart[0].id,
+                                 name: data.name,
+                                 price: Number(data.price),
+                                 fileLink: data.fileLink
+                             });
+                             totalAmount += Number(data.price);
+                             
+                             document.getElementById('summary-name').innerText = data.name;
+                             document.getElementById('summary-cat').innerText = data.category || 'Digital';
+                             
+                             const mainImage = (data.images && data.images.length > 0) ? data.images[0] : (data.image || data.imageUrl || 'https://placehold.co/600x400');
+                             
+                             // FIX: Explicitly Show Image, Hide Icon
+                             const imgElement = document.getElementById('summary-img');
+                             const iconElement = document.getElementById('summary-icon');
+                             
+                             imgElement.src = mainImage;
+                             imgElement.classList.remove('hidden');
+                             iconElement.classList.add('hidden');
+                         }
+                    } else {
+                        // If more than 1 item, show the bag icon
+                        for(let item of cart) {
+                            const docRef = doc(db, "products", item.id);
+                            const docSnap = await getDoc(docRef);
+                            if(docSnap.exists()){
+                                const data = docSnap.data();
+                                purchasedItems.push({
+                                    id: item.id,
+                                    name: data.name,
+                                    price: Number(data.price),
+                                    fileLink: data.fileLink
+                                });
+                                totalAmount += Number(data.price);
+                            }
                         }
-                    }
 
-                    document.getElementById('summary-name').innerText = `${purchasedItems.length} Items in Cart`;
-                    document.getElementById('summary-cat').innerText = "MULTIPLE CATEGORIES";
-                    mediaBox.innerHTML = `<i class="fas fa-shopping-bag text-2xl text-purple-600"></i>`;
+                        document.getElementById('summary-name').innerText = `${purchasedItems.length} Items in Cart`;
+                        document.getElementById('summary-cat').innerText = "MULTIPLE CATEGORIES";
+                        
+                        // FIX: Explicitly Hide Image, Show Icon
+                        document.getElementById('summary-img').classList.add('hidden');
+                        document.getElementById('summary-icon').classList.remove('hidden');
+                    }
                 }
 
                 document.getElementById('summary-price').innerText = totalAmount;
@@ -264,7 +306,8 @@
                 document.getElementById('checkout-content').classList.add('hidden');
                 document.getElementById('buyerName').innerText = custName;
                 
-                if (isCartCheckout) {
+                // If it's a multiple item checkout (either cart with multiple items)
+                if (isCartCheckout && purchasedItems.length > 1) {
                     const linksContainer = document.getElementById('downloadLinksContainer');
                     linksContainer.innerHTML = '';
                     purchasedItems.forEach(item => {
@@ -277,12 +320,18 @@
                     });
                     localStorage.removeItem('ira_cart');
                 } else {
+                    // Single item checkout (either direct buy or 1 item in cart)
                     document.getElementById('downloadFileBtn').classList.remove('hidden');
                     document.getElementById('leaveReviewBtn').classList.remove('hidden');
                     document.getElementById('reviewSeparator').classList.remove('hidden');
                     
                     document.getElementById('downloadFileBtn').href = purchasedItems[0].fileLink; 
-                    document.getElementById('leaveReviewBtn').href = `download.html?id=${singleProductId}`;
+                    document.getElementById('leaveReviewBtn').href = `download.html?id=${purchasedItems[0].id}`;
+                    
+                    // Clear cart if it was a single item cart checkout
+                     if(isCartCheckout) {
+                        localStorage.removeItem('ira_cart');
+                    }
                 }
                 
                 document.getElementById('success-screen').classList.remove('hidden');
